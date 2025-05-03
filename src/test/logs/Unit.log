@@ -1,0 +1,56 @@
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp completed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testMoveUnit_movesWithinBounds
+INFO: [UnitTest] testMoveUnit_movesWithinBounds start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testMoveUnit_movesWithinBounds
+INFO: [UnitTest] testMoveUnit_movesWithinBounds passed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp completed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testFindUnits_ignoreFriendlyUnits
+INFO: [UnitTest] testFindUnits_ignoreFriendlyUnits start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testFindUnits_ignoreFriendlyUnits
+INFO: [UnitTest] testFindUnits_ignoreFriendlyUnits passed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp completed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testFindUnits_enemyWithinRange
+INFO: [UnitTest] testFindUnits_enemyWithinRange start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testFindUnits_enemyWithinRange
+INFO: [UnitTest] testFindUnits_enemyWithinRange passed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp completed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testFindUnits_noEnemiesInRange
+INFO: [UnitTest] testFindUnits_noEnemiesInRange start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testFindUnits_noEnemiesInRange
+INFO: [UnitTest] testFindUnits_noEnemiesInRange passed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp completed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testCasualties_exactFullUnitLoss
+INFO: [UnitTest] testCasualties_exactFullUnitLoss start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testCasualties_exactFullUnitLoss
+INFO: [UnitTest] testCasualties_exactFullUnitLoss passed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp completed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testCasualties_partialDamageNotLosingUnit
+INFO: [UnitTest] testCasualties_partialDamageNotLosingUnit start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testCasualties_partialDamageNotLosingUnit
+INFO: [UnitTest] testCasualties_partialDamageNotLosingUnit passed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest setUp
+INFO: [UnitTest] setUp completed
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testUpdate_computesStackDamageCorrectly
+INFO: [UnitTest] testUpdate_computesStackDamageCorrectly start
+Apr 26, 2025 2:51:09 PM vln.com.units.UnitTest testUpdate_computesStackDamageCorrectly
+INFO: [UnitTest] testUpdate_computesStackDamageCorrectly passed

@@ -1,0 +1,192 @@
+Apr 26, 2025 2:48:53 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+INFO: Starting testPlacementOfUnits
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+INFO: testPlacementOfUnits assertions passed
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+INFO: testPlacementOfUnits completed
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+INFO: Starting testResetMovementFlags
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+SEVERE: Accessed private method: resetMovementFlags
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+INFO: testResetMovementFlags assertions passed
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+INFO: testResetMovementFlags completed
+Apr 26, 2025 2:48:54 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:48:55 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:48:55 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+INFO: Starting testFindTargetInRange
+Apr 26, 2025 2:48:55 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:48:55 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+SEVERE: Accessed private method: findTargetInRange
+Apr 26, 2025 2:48:55 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+INFO: testFindTargetInRange assertions passed
+Apr 26, 2025 2:48:55 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+INFO: testFindTargetInRange completed
+Apr 26, 2025 2:48:55 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+INFO: Starting testBattleEndsWithPlayerVictory
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+SEVERE: Accessed private method: isBattleOver
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+INFO: testBattleEndsWithPlayerVictory assertions passed
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+INFO: testBattleEndsWithPlayerVictory completed
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+INFO: Starting testBattleEndsWithPlayerDefeat
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+SEVERE: Accessed private method: setTestingMode
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+SEVERE: Accessed private method: isBattleOver
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+INFO: testBattleEndsWithPlayerDefeat assertions passed
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+INFO: testBattleEndsWithPlayerDefeat completed
+Apr 26, 2025 2:48:56 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+INFO: Starting testPerformAttackDestroysUnit
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+SEVERE: Accessed private method: performAttack
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+INFO: testPerformAttackDestroysUnit assertions passed
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+INFO: testPerformAttackDestroysUnit completed
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+INFO: testMoveTowardsPlayer test started successfully
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+WARNING: The system output has been replaced
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+SEVERE: Access to private method via reflection detected
+Apr 26, 2025 2:48:57 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+INFO: testMoveTowardsPlayer test completed successfully
+Apr 26, 2025 2:51:06 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:51:06 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:51:06 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+INFO: Starting testPlacementOfUnits
+Apr 26, 2025 2:51:06 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:51:06 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+INFO: testPlacementOfUnits assertions passed
+Apr 26, 2025 2:51:06 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+INFO: testPlacementOfUnits completed
+Apr 26, 2025 2:51:06 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+INFO: Starting testResetMovementFlags
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+SEVERE: Accessed private method: resetMovementFlags
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+INFO: testResetMovementFlags assertions passed
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+INFO: testResetMovementFlags completed
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+INFO: Starting testFindTargetInRange
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+SEVERE: Accessed private method: findTargetInRange
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+INFO: testFindTargetInRange assertions passed
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+INFO: testFindTargetInRange completed
+Apr 26, 2025 2:51:07 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+INFO: Starting testBattleEndsWithPlayerVictory
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+SEVERE: Accessed private method: isBattleOver
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+INFO: testBattleEndsWithPlayerVictory assertions passed
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+INFO: testBattleEndsWithPlayerVictory completed
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+INFO: Starting testBattleEndsWithPlayerDefeat
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+SEVERE: Accessed private method: setTestingMode
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+SEVERE: Accessed private method: isBattleOver
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+INFO: testBattleEndsWithPlayerDefeat assertions passed
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+INFO: testBattleEndsWithPlayerDefeat completed
+Apr 26, 2025 2:51:08 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+INFO: Starting testPerformAttackDestroysUnit
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+SEVERE: Accessed private field: battleGrid
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+SEVERE: Accessed private method: performAttack
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+INFO: testPerformAttackDestroysUnit assertions passed
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+INFO: testPerformAttackDestroysUnit completed
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+INFO: testMoveTowardsPlayer test started successfully
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+WARNING: The system output has been replaced
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+SEVERE: Access to private method via reflection detected
+Apr 26, 2025 2:51:09 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+INFO: testMoveTowardsPlayer test completed successfully

@@ -1,0 +1,156 @@
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest testEndGame_PlayerWinsByCapturingCastles
+INFO: [AreaMapTest] testEndGame_PlayerWinsByCapturingCastles start
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest testEndGame_PlayerWinsByCapturingCastles
+INFO: [AreaMapTest] testEndGame_PlayerWinsByCapturingCastles passed
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest testHeroVisibilityInSmoke
+INFO: [AreaMapTest] testHeroVisibilityInSmoke start
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest testHeroVisibilityInSmoke
+INFO: [AreaMapTest] testHeroVisibilityInSmoke passed
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest testMoveHero_offMap_noChange
+INFO: [AreaMapTest] testMoveHero_offMap_noChange start
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest testMoveHero_offMap_noChange
+INFO: [AreaMapTest] testMoveHero_offMap_noChange passed
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest testApplySmoke_setsSmokeLayerWithinRadius
+INFO: [AreaMapTest] testApplySmoke_setsSmokeLayerWithinRadius start
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest testApplySmoke_setsSmokeLayerWithinRadius
+INFO: [AreaMapTest] testApplySmoke_setsSmokeLayerWithinRadius passed
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest testEndRound_resetsOnlyAvailableHeroes
+INFO: [AreaMapTest] testEndRound_resetsOnlyAvailableHeroes start
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest testEndRound_resetsOnlyAvailableHeroes
+INFO: [AreaMapTest] testEndRound_resetsOnlyAvailableHeroes passed
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:52 PM vln.com.map.AreaMapTest testMoveHero_trailMovement_reducesMovesAndMovesHero
+INFO: [AreaMapTest] testMoveHero_trailMovement_reducesMovesAndMovesHero start
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testMoveHero_trailMovement_reducesMovesAndMovesHero
+INFO: [AreaMapTest] testMoveHero_trailMovement_reducesMovesAndMovesHero passed
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testRemoveSmoke_clearsSmokeLayerAndResetsDisplay
+INFO: [AreaMapTest] testRemoveSmoke_clearsSmokeLayerAndResetsDisplay start
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testRemoveSmoke_clearsSmokeLayerAndResetsDisplay
+INFO: [AreaMapTest] testRemoveSmoke_clearsSmokeLayerAndResetsDisplay passed
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testEndGame_PlayerLosesWhenBotCapturesCastles
+INFO: [AreaMapTest] testEndGame_PlayerLosesWhenBotCapturesCastles start
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testEndGame_PlayerLosesWhenBotCapturesCastles
+INFO: [AreaMapTest] testEndGame_PlayerLosesWhenBotCapturesCastles passed
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testMoveHero_obstacle_noMove
+INFO: [AreaMapTest] testMoveHero_obstacle_noMove start
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testMoveHero_obstacle_noMove
+INFO: [AreaMapTest] testMoveHero_obstacle_noMove passed
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testMoveThroughSmoke_reducesMovesCorrectly
+INFO: [AreaMapTest] testMoveThroughSmoke_reducesMovesCorrectly start
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testMoveThroughSmoke_reducesMovesCorrectly
+INFO: [AreaMapTest] testMoveThroughSmoke_reducesMovesCorrectly passed
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testSmokeUnitSpawn_createsSmokeArea
+INFO: [AreaMapTest] testSmokeUnitSpawn_createsSmokeArea start
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testSmokeUnitSpawn_createsSmokeArea
+INFO: [AreaMapTest] testSmokeUnitSpawn_createsSmokeArea passed
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testGetHeightWidth
+INFO: [AreaMapTest] testGetHeightWidth start
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testGetHeightWidth
+INFO: [AreaMapTest] testGetHeightWidth passed
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testHasAnyMoves_trailAndFieldCosts
+INFO: [AreaMapTest] testHasAnyMoves_trailAndFieldCosts start
+Apr 26, 2025 2:48:53 PM vln.com.map.AreaMapTest testHasAnyMoves_trailAndFieldCosts
+INFO: [AreaMapTest] testHasAnyMoves_trailAndFieldCosts passed
+Apr 26, 2025 2:51:04 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:04 PM vln.com.map.AreaMapTest testEndGame_PlayerWinsByCapturingCastles
+INFO: [AreaMapTest] testEndGame_PlayerWinsByCapturingCastles start
+Apr 26, 2025 2:51:04 PM vln.com.map.AreaMapTest testEndGame_PlayerWinsByCapturingCastles
+INFO: [AreaMapTest] testEndGame_PlayerWinsByCapturingCastles passed
+Apr 26, 2025 2:51:04 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:04 PM vln.com.map.AreaMapTest testHeroVisibilityInSmoke
+INFO: [AreaMapTest] testHeroVisibilityInSmoke start
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testHeroVisibilityInSmoke
+INFO: [AreaMapTest] testHeroVisibilityInSmoke passed
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testMoveHero_offMap_noChange
+INFO: [AreaMapTest] testMoveHero_offMap_noChange start
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testMoveHero_offMap_noChange
+INFO: [AreaMapTest] testMoveHero_offMap_noChange passed
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testApplySmoke_setsSmokeLayerWithinRadius
+INFO: [AreaMapTest] testApplySmoke_setsSmokeLayerWithinRadius start
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testApplySmoke_setsSmokeLayerWithinRadius
+INFO: [AreaMapTest] testApplySmoke_setsSmokeLayerWithinRadius passed
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testEndRound_resetsOnlyAvailableHeroes
+INFO: [AreaMapTest] testEndRound_resetsOnlyAvailableHeroes start
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testEndRound_resetsOnlyAvailableHeroes
+INFO: [AreaMapTest] testEndRound_resetsOnlyAvailableHeroes passed
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testMoveHero_trailMovement_reducesMovesAndMovesHero
+INFO: [AreaMapTest] testMoveHero_trailMovement_reducesMovesAndMovesHero start
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testMoveHero_trailMovement_reducesMovesAndMovesHero
+INFO: [AreaMapTest] testMoveHero_trailMovement_reducesMovesAndMovesHero passed
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testRemoveSmoke_clearsSmokeLayerAndResetsDisplay
+INFO: [AreaMapTest] testRemoveSmoke_clearsSmokeLayerAndResetsDisplay start
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testRemoveSmoke_clearsSmokeLayerAndResetsDisplay
+INFO: [AreaMapTest] testRemoveSmoke_clearsSmokeLayerAndResetsDisplay passed
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testEndGame_PlayerLosesWhenBotCapturesCastles
+INFO: [AreaMapTest] testEndGame_PlayerLosesWhenBotCapturesCastles start
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testEndGame_PlayerLosesWhenBotCapturesCastles
+INFO: [AreaMapTest] testEndGame_PlayerLosesWhenBotCapturesCastles passed
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testMoveHero_obstacle_noMove
+INFO: [AreaMapTest] testMoveHero_obstacle_noMove start
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testMoveHero_obstacle_noMove
+INFO: [AreaMapTest] testMoveHero_obstacle_noMove passed
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:05 PM vln.com.map.AreaMapTest testMoveThroughSmoke_reducesMovesCorrectly
+INFO: [AreaMapTest] testMoveThroughSmoke_reducesMovesCorrectly start
+Apr 26, 2025 2:51:06 PM vln.com.map.AreaMapTest testMoveThroughSmoke_reducesMovesCorrectly
+INFO: [AreaMapTest] testMoveThroughSmoke_reducesMovesCorrectly passed
+Apr 26, 2025 2:51:06 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:06 PM vln.com.map.AreaMapTest testSmokeUnitSpawn_createsSmokeArea
+INFO: [AreaMapTest] testSmokeUnitSpawn_createsSmokeArea start
+Apr 26, 2025 2:51:06 PM vln.com.map.AreaMapTest testSmokeUnitSpawn_createsSmokeArea
+INFO: [AreaMapTest] testSmokeUnitSpawn_createsSmokeArea passed
+Apr 26, 2025 2:51:06 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:06 PM vln.com.map.AreaMapTest testGetHeightWidth
+INFO: [AreaMapTest] testGetHeightWidth start
+Apr 26, 2025 2:51:06 PM vln.com.map.AreaMapTest testGetHeightWidth
+INFO: [AreaMapTest] testGetHeightWidth passed
+Apr 26, 2025 2:51:06 PM vln.com.map.AreaMapTest setUp
+INFO: [AreaMapTest] Setting up AreaMap instance
+Apr 26, 2025 2:51:06 PM vln.com.map.AreaMapTest testHasAnyMoves_trailAndFieldCosts
+INFO: [AreaMapTest] testHasAnyMoves_trailAndFieldCosts start
+Apr 26, 2025 2:51:06 PM vln.com.map.AreaMapTest testHasAnyMoves_trailAndFieldCosts
+INFO: [AreaMapTest] testHasAnyMoves_trailAndFieldCosts passed
