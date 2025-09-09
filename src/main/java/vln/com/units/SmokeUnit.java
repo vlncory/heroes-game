@@ -3,7 +3,7 @@ package vln.com.units;
 import java.util.Random;
 
 import vln.com.graphic.Props;
-import vln.com.map.AreaMap;
+import vln.com.pattern.AreaMap;
 
 public class SmokeUnit extends Props {
 

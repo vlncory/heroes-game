@@ -1,7 +1,7 @@
 package vln.com.buildings;
 
 import vln.com.units.Hero;
-import vln.com.map.AreaMap;
+import vln.com.pattern.AreaMap;
 import vln.com.graphic.Props;
 
 public class Building extends Props {

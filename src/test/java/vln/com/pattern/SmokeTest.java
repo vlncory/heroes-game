@@ -1,4 +1,4 @@
-package vln.com.map;
+package vln.com.pattern;
 
 import static org.junit.jupiter.api.Assertions.*;
 

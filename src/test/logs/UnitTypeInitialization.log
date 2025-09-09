@@ -18,3 +18,23 @@ Apr 26, 2025 2:51:04 PM vln.com.units.UnitTypeInitializationTest testUnitInitial
 INFO: [UnitTypeInitializationTest] testUnitInitialization start: P x3
 Apr 26, 2025 2:51:04 PM vln.com.units.UnitTypeInitializationTest testUnitInitialization
 INFO: [UnitTypeInitializationTest] testUnitInitialization passed: P x3
+Sep 08, 2025 6:07:46 PM vln.com.units.UnitTypeInitializationTest testUnitInitialization
+INFO: [UnitTypeInitializationTest] testUnitInitialization start: S x3
+Sep 08, 2025 6:07:46 PM vln.com.units.UnitTypeInitializationTest testUnitInitialization
+INFO: [UnitTypeInitializationTest] testUnitInitialization passed: S x3
+Sep 08, 2025 6:07:46 PM vln.com.units.UnitTypeInitializationTest testUnitInitialization
+INFO: [UnitTypeInitializationTest] testUnitInitialization start: A x3
+Sep 08, 2025 6:07:46 PM vln.com.units.UnitTypeInitializationTest testUnitInitialization
+INFO: [UnitTypeInitializationTest] testUnitInitialization passed: A x3
+Sep 08, 2025 6:07:46 PM vln.com.units.UnitTypeInitializationTest testUnitInitialization
+INFO: [UnitTypeInitializationTest] testUnitInitialization start: L x3
+Sep 08, 2025 6:07:46 PM vln.com.units.UnitTypeInitializationTest testUnitInitialization
+INFO: [UnitTypeInitializationTest] testUnitInitialization passed: L x3
+Sep 08, 2025 6:07:46 PM vln.com.units.UnitTypeInitializationTest testUnitInitialization
+INFO: [UnitTypeInitializationTest] testUnitInitialization start: C x3
+Sep 08, 2025 6:07:46 PM vln.com.units.UnitTypeInitializationTest testUnitInitialization
+INFO: [UnitTypeInitializationTest] testUnitInitialization passed: C x3
+Sep 08, 2025 6:07:46 PM vln.com.units.UnitTypeInitializationTest testUnitInitialization
+INFO: [UnitTypeInitializationTest] testUnitInitialization start: P x3
+Sep 08, 2025 6:07:46 PM vln.com.units.UnitTypeInitializationTest testUnitInitialization
+INFO: [UnitTypeInitializationTest] testUnitInitialization passed: P x3

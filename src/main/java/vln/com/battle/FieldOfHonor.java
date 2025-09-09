@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import vln.com.graphic.Props;
-import vln.com.map.*;
+import vln.com.pattern.*;
 import vln.com.units.*;
 
 public class FieldOfHonor {

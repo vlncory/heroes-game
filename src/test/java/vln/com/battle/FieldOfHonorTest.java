@@ -7,7 +7,7 @@ import java.io.PrintStream;
 import java.util.logging.*;
 
 import vln.com.graphic.Props;
-import vln.com.map.Trail;
+import vln.com.pattern.Trail;
 import vln.com.units.Hero;
 import vln.com.units.Unit;
 

@@ -46,3 +46,27 @@ Apr 26, 2025 2:51:04 PM vln.com.buildings.BuildingTest stablePurchase_ShouldEnab
 INFO: [BuildingTest] Testing stable purchase
 Apr 26, 2025 2:51:04 PM vln.com.buildings.BuildingTest stablePurchase_ShouldEnableHeroStable
 INFO: [BuildingTest] Stable flag set
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest setUp
+INFO: [BuildingTest] Preparing test setup
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest invalidPurchase_ShouldNotAffectState
+INFO: [BuildingTest] Testing invalid purchase
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest invalidPurchase_ShouldNotAffectState
+INFO: [BuildingTest] State preserved
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest setUp
+INFO: [BuildingTest] Preparing test setup
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest purchaseBuilding_ShouldDeductGoldAndMarkPurchased
+INFO: [BuildingTest] Testing valid building purchase
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest purchaseBuilding_ShouldDeductGoldAndMarkPurchased
+INFO: [BuildingTest] Purchase validated
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest setUp
+INFO: [BuildingTest] Preparing test setup
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest locatorPurchase_ShouldRevealSmokeWhenPlayer
+INFO: [BuildingTest] Testing locator purchase
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest locatorPurchase_ShouldRevealSmokeWhenPlayer
+INFO: [BuildingTest] Locator action completed
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest setUp
+INFO: [BuildingTest] Preparing test setup
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest stablePurchase_ShouldEnableHeroStable
+INFO: [BuildingTest] Testing stable purchase
+Sep 08, 2025 6:07:46 PM vln.com.buildings.BuildingTest stablePurchase_ShouldEnableHeroStable
+INFO: [BuildingTest] Stable flag set

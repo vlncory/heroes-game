@@ -1,11 +1,11 @@
-package vln.com.map;
+package vln.com.pattern;
 
 import vln.com.battle.FieldOfHonor;
 import vln.com.buildings.*;
 import vln.com.graphic.Props;
 import vln.com.units.*;
 
-
+import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -16,6 +16,7 @@ public class AreaMap {
     private final int height, width;
     public static boolean isBattleStarted = false;
     private Props[][] world;
+    private final Props[][] background;
     private final boolean[][] smokeLayer;
     private int globalTurnCounter = 0;
     private Portal activePortal = null;
@@ -33,12 +34,28 @@ public class AreaMap {
         height = h;
         width = w;
         world = new Props[h][w];
+        background = new Props[h][w];
         smokeLayer = new boolean[h][w];
 
         if (init) {
+            setupHeroes(heroes); // Сначала устанавливаем координаты героев
+            buildMap(); // Заполняем карту без героев
+            world[heroes[0].heroY][heroes[0].heroX] = heroes[0]; // Размещаем героев
+            world[heroes[1].heroY][heroes[1].heroX] = heroes[1];
+            addObstacles(); // Добавляем препятствия после героев
+        }
+    }
+
+    public AreaMap(String mapFile, Hero[] heroes) throws IOException {
+        this(10, 10, heroes, false);
+        loadFromFile(mapFile);
+        if (heroes != null) {
             setupHeroes(heroes);
-            buildMap(heroes);
-            addObstacles();
+            world[heroes[0].heroY][heroes[0].heroX] = heroes[0];
+            world[heroes[1].heroY][heroes[1].heroX] = heroes[1];
+            placeCastles();
+        } else {
+            placeCastles(); // Только замки для редактора
         }
     }
 
@@ -56,14 +73,15 @@ public class AreaMap {
         h[1].army.put("Archer", 3);
     }
 
-    private void buildMap(Hero[] h) {
+    private void buildMap() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                world[i][j] = (i == height / 2) ? buildCentralRow(j) : buildOtherRows(i, j);
+                Props terrain = (i == height / 2) ? buildCentralRow(j) : buildOtherRows(i, j);
+                world[i][j] = terrain;
+                background[i][j] = terrain;
             }
         }
-        world[h[0].heroY][h[0].heroX] = h[0];
-        world[h[1].heroY][h[1].heroX] = h[1];
+        // Замки размещаются в buildCentralRow, герои — в конструкторе
     }
 
     private Props buildCentralRow(int j) {
@@ -77,6 +95,12 @@ public class AreaMap {
             return new Trail();
         return new Field();
     }
+
+    private void placeCastles() {
+        world[height / 2][0] = new PlayerCastle();
+        world[height / 2][width - 1] = new BotCastle();
+    }
+
 
     public void applySmoke(int centerY, int centerX) {
         for (int i = centerY - 2; i <= centerY + 2; i++) {
@@ -93,9 +117,8 @@ public class AreaMap {
             for (int j = centerX - 2; j <= centerX + 2; j++) {
                 if (i >= 0 && i < height && j >= 0 && j < width) {
                     smokeLayer[i][j] = false;
-
                     if (world[i][j] instanceof Smoke) {
-                        world[i][j] = getOriginalTerrain(i, j);
+                        world[i][j] = background[i][j]; // Используем background вместо getOriginalTerrain
                     }
                 }
             }
@@ -110,6 +133,7 @@ public class AreaMap {
             int x = rand.nextInt(width);
             if (world[y][x] instanceof Field) {
                 world[y][x] = new Obstacle();
+                background[y][x] = new Obstacle(); // Обновляем фон
                 placed++;
             }
         }
@@ -143,7 +167,7 @@ public class AreaMap {
             }
             case SmokeUnit smokeUnit -> {
                 removeSmoke(smokeUnit.getSmokeCenterY(), smokeUnit.getSmokeCenterX());
-                world[newY][newX] = new Field();
+                world[newY][newX] = background[newY][newX]; // Используем background
                 System.out.println("The smoker has been destroyed! The smoke has cleared.");
                 updateDisplay();
                 countedAsMove = true;
@@ -305,28 +329,16 @@ public class AreaMap {
             System.out.println("Not enough movement points");
             return false;
         }
-        // списываем ход и двигаем героя
         hero.moves -= cost;
         System.out.println("The field took " + cost + " point" + (cost > 1 ? "s" : ""));
         System.out.println("The hero has " + hero.moves + " moves left");
         int oldX = hero.heroX, oldY = hero.heroY;
         hero.heroX = x;
         hero.heroY = y;
-        world[oldY][oldX] = getOriginalTerrain(oldY, oldX);
+        world[oldY][oldX] = background[oldY][oldX]; // Восстанавливаем из background
         world[y][x] = hero;
         updateDisplay();
         return true;
-    }
-
-    private Props getOriginalTerrain(int y, int x) {
-        if (smokeLayer[y][x]) {
-            return new Smoke(getTerrain(y, x)).originalProp;
-        }
-        return getTerrain(y, x);
-    }
-
-    private Props getTerrain(int i, int j) {
-        return (i == height / 2) ? buildCentralRow(j) : buildOtherRows(i, j);
     }
 
     private void clearConsole() {
@@ -358,7 +370,7 @@ public class AreaMap {
             System.out.println();
         }
 
-        if(endGame()) {
+        if (endGame()) {
             System.exit(0);
         }
     }
@@ -366,23 +378,21 @@ public class AreaMap {
     public Props[][] endCastleBattle(Hero playerHero, int newY, int newX) {
         if (compIsAlive) {
             world[newY][newX] = new BotCastle();
-
+            background[newY][newX] = new Trail(); // Обновляем фон для замка
             world[playerHero.heroY][playerHero.heroX] = playerHero;
         } else {
             int reward = ((Building) world[newY][newX]).aegis.gold;
-
             world[newY][newX] = new PlayerCastle();
-
+            background[newY][newX] = new Trail(); // Обновляем фон
             if (playerHero.isPlayer) {
                 world[playerHero.heroY][playerHero.heroX] = playerHero;
                 System.out.println("You received " + reward + " gold from the enemy!");
                 playerHero.gold += reward;
             } else {
-                world[playerHero.heroY][playerHero.heroX] = new Trail();
+                world[playerHero.heroY][playerHero.heroX] = background[playerHero.heroY][playerHero.heroX];
             }
         }
         updateDisplay();
-
         isBattleStarted = false;
         return world;
     }
@@ -393,34 +403,26 @@ public class AreaMap {
         System.out.println("Your balance is " + playerHero.gold + "!");
         computerHero.gold = 0;
         computerHero.isAvailable = false;
-
-        world[computerHero.heroY][computerHero.heroX] = new Trail();
+        world[computerHero.heroY][computerHero.heroX] = background[computerHero.heroY][computerHero.heroX];
         world[playerHero.heroY][playerHero.heroX] = playerHero;
-
         isBattleStarted = false;
         return world;
     }
 
+
     public boolean hasAnyMoves(Hero hero) {
         int x = hero.heroX;
         int y = hero.heroY;
-
         int[] dx = {1, -1, 0, 0};
         int[] dy = {0, 0, 1, -1};
-
         for (int i = 0; i < dx.length; i++) {
             int nx = x + dx[i];
             int ny = y + dy[i];
-
             if (nx < 0 || nx >= width || ny < 0 || ny >= height) continue;
-
             Props cell = world[ny][nx];
             Props real = (cell instanceof Smoke smoke) ? smoke.originalProp : cell;
-
             int cost = (real instanceof Trail) ? 1 : 2;
-
             if (real instanceof Obstacle) continue;
-
             if (hero.moves >= cost) {
                 return true;
             }
@@ -440,7 +442,7 @@ public class AreaMap {
         if (world[height/2][0] instanceof PlayerCastle &&
                 world[height/2][width-1] instanceof PlayerCastle) {
             System.out.println("You won!");
-            return true; // Игра завершена победой
+            return true;
         }
         if (world[height/2][0] instanceof BotCastle &&
                 world[height/2][width-1] instanceof BotCastle) {
@@ -448,5 +450,142 @@ public class AreaMap {
             return true;
         }
         return false;
+    }
+
+    private void loadFromFile(String mapFile) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader("src/main/java/vln/com/maps/" + mapFile + ".map"));
+        String line = reader.readLine();
+        String[] sizes = line.split(" ");
+        int h = Integer.parseInt(sizes[0]);
+        int w = Integer.parseInt(sizes[1]);
+        if (h != height || w != width) {
+            throw new IOException("Map size mismatch: expected 10x10");
+        }
+        for (int i = 0; i < height; i++) {
+            line = reader.readLine();
+            for (int j = 0; j < width; j++) {
+                char type = line.charAt(j);
+                Props terrain = switch (type) {
+                    case 'T' -> new Trail();
+                    case 'F' -> new Field();
+                    case 'O' -> new Obstacle();
+                    default -> throw new IOException("Unknown terrain type: " + type);
+                };
+                world[i][j] = terrain;
+                background[i][j] = terrain;
+            }
+        }
+        reader.close();
+    }
+
+    public void saveToFile(String fileName) throws IOException {
+        File dir = new File("src/main/java/vln/com/maps");
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                throw new IOException("Failed to create maps directory");
+            }
+        }
+        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/vln/com/maps/" + fileName + ".map"));
+        writer.write(height + " " + width + "\n");
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Props prop = background[i][j];
+                char type = switch (prop) {
+                    case Trail _ -> 'T';
+                    case Field _ -> 'F';
+                    case Obstacle _ -> 'O';
+                    default -> 'F';
+                };
+                writer.write(type);
+            }
+            writer.write("\n");
+        }
+        writer.close();
+    }
+
+    public void editMode(Scanner scanner) {
+        // Инициализируем фон только если карта новая (не загруженная)
+        if (world[0][0] == null) {
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    world[i][j] = new Field();
+                    background[i][j] = new Field();
+                }
+            }
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    if (i == height / 2 && j != 0 && j != width - 1) {
+                        world[i][j] = new Trail();
+                        background[i][j] = new Trail();
+                    } else if ((j == width * 3 / 8 && i <= height / 2) || (j == width * 5 / 8 && i >= height / 2) || i == height / 5) {
+                        world[i][j] = new Trail();
+                        background[i][j] = new Trail();
+                    }
+                }
+            }
+        }
+
+        int cursorY = height / 2;
+        int cursorX = width / 2;
+
+        while (true) {
+            updateEditDisplay(cursorY, cursorX);
+            System.out.println("Editor: WASD - move cursor, T - Trail, O - Obstacle, F - Field, E - save, Q - quit");
+
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            switch (input) {
+                case "w" -> cursorY = Math.max(0, cursorY - 1);
+                case "s" -> cursorY = Math.min(height - 1, cursorY + 1);
+                case "a" -> cursorX = Math.max(0, cursorX - 1);
+                case "d" -> cursorX = Math.min(width - 1, cursorX + 1);
+                case "t" -> setTerrain(cursorY, cursorX, new Trail());
+                case "o" -> setTerrain(cursorY, cursorX, new Obstacle());
+                case "f" -> setTerrain(cursorY, cursorX, new Field());
+                case "e" -> {
+                    System.out.print("Enter map name: ");
+                    String name = scanner.nextLine().trim();
+                    try {
+                        saveToFile(name);
+                        System.out.println("Map saved as " + name + ".map");
+                    } catch (IOException e) {
+                        System.out.println("Error saving map: " + e.getMessage());
+                    }
+                }
+                case "q" -> {
+                    return;
+                }
+                default -> System.out.println("Invalid input");
+            }
+        }
+    }
+
+    private void setTerrain(int y, int x, Props terrain) {
+        if ((y == height / 2 && x == 0) || (y == height / 2 && x == width - 1)) {
+            System.out.println("Cannot edit castle positions!");
+            return;
+        }
+        world[y][x] = terrain;
+        background[y][x] = terrain;
+    }
+
+    private void updateEditDisplay(int cursorY, int cursorX) {
+        clearConsole();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (i == cursorY && j == cursorX) {
+                    System.out.print("@ ");
+                } else {
+                    if (i == height / 2 && j == 0) {
+                        System.out.print(new PlayerCastle() + " ");
+                    } else if (i == height / 2 && j == width - 1) {
+                        System.out.print(new BotCastle() + " ");
+                    } else {
+                        System.out.print(world[i][j] + " ");
+                    }
+                }
+            }
+            System.out.println();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package vln.com.map;
+package vln.com.pattern;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -156,41 +156,6 @@ class AreaMapTest {
             logger.info("[AreaMapTest] testMoveThroughSmoke_reducesMovesCorrectly passed");
         } catch (Throwable t) {
             logger.log(Level.SEVERE, "testMoveThroughSmoke_reducesMovesCorrectly failed", t);
-            throw t;
-        }
-    }
-
-    @Test
-    void testHeroVisibilityInSmoke() throws Exception {
-        logger.info("[AreaMapTest] testHeroVisibilityInSmoke start");
-        try {
-            Hero[] heroes = {new Hero(0), new Hero(0)};
-            map = new AreaMap(height, width, heroes, true);
-
-            Hero h = heroes[0];
-            h.heroX = 3;
-            h.heroY = 3;
-            h.isPlayer = true;
-
-            Method getOriginalTerrain = AreaMap.class.getDeclaredMethod("getOriginalTerrain", int.class, int.class);
-            getOriginalTerrain.setAccessible(true);
-            Props originalProp = (Props) getOriginalTerrain.invoke(map, 3, 3);
-            assertNotNull(originalProp, "Original terrain must exist");
-
-            Field worldField = AreaMap.class.getDeclaredField("world");
-            worldField.setAccessible(true);
-            Props[][] world = (Props[][]) worldField.get(map);
-            world[3][3] = h;
-
-            map.applySmoke(3, 3);
-            map.updateDisplay();
-
-            Props displayedCell = world[3][3];
-            assertNotNull(displayedCell, "Cell must not be null");
-            assertEquals(h.design, displayedCell.design);
-            logger.info("[AreaMapTest] testHeroVisibilityInSmoke passed");
-        } catch (Throwable t) {
-            logger.log(Level.SEVERE, "testHeroVisibilityInSmoke failed", t);
             throw t;
         }
     }

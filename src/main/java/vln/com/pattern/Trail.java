@@ -1,4 +1,4 @@
-package vln.com.map;
+package vln.com.pattern;
 
 public class Trail extends Road {
 
