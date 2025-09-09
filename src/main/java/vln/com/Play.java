@@ -1,6 +1,7 @@
 package vln.com;
 
 import vln.com.pattern.AreaMap;
+import vln.com.leaderboard.Leaderboard;
 import vln.com.units.Hero;
 
 import java.io.File;
@@ -24,7 +25,7 @@ public class Play {
                 case "1" -> startGame(userName, scanner);
                 case "2" -> loadGame(scanner, userName);
                 case "3" -> editMap(scanner);
-                case "4" -> System.out.println("\nThe leaderboard is in development...");
+                case "4" -> displayLeaderboard();
                 case "5" -> {
                     System.out.println("Exiting the game...");
                     scanner.close();
@@ -32,6 +33,25 @@ public class Play {
                 }
                 default -> System.out.println("Invalid input! Try again");
             }
+        }
+    }
+
+    private static void displayLeaderboard() {
+        try {
+            Leaderboard leaderboard = Leaderboard.loadFromFile();
+            var topRecords = leaderboard.getTopRecords(5);
+            System.out.println("\n=== Leaderboard (Top 5) ===");
+            if (topRecords.isEmpty()) {
+                System.out.println("No records yet.");
+            } else {
+                for (int i = 0; i < topRecords.size(); i++) {
+                    Leaderboard.Record record = topRecords.get(i);
+                    System.out.printf("%d. %s - %d points (Map: %s)%n",
+                            i + 1, record.username(), record.score(), record.mapName());
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading leaderboard: " + e.getMessage());
         }
     }
 

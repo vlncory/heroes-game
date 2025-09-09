@@ -3,6 +3,7 @@ package vln.com.pattern;
 import vln.com.battle.FieldOfHonor;
 import vln.com.buildings.*;
 import vln.com.graphic.Props;
+import vln.com.leaderboard.Leaderboard;
 import vln.com.units.*;
 
 import java.io.*;
@@ -384,8 +385,39 @@ public class AreaMap implements Serializable {
         }
 
         if (endGame()) {
+            if (world[height/2][0] instanceof PlayerCastle &&
+                    world[height/2][width-1] instanceof PlayerCastle) {
+                if (username != null) {
+                    int score = calculateScore(); // Убрали playerCastle
+                    String mapName = (currentMapName != null) ? currentMapName : "Standard";
+                    try {
+                        Leaderboard leaderboard = Leaderboard.loadFromFile();
+                        leaderboard.addRecord(username, score, mapName);
+                        leaderboard.saveToFile();
+                        System.out.println("New record saved: " + score + " points on map " + mapName);
+                    } catch (IOException | ClassNotFoundException e) {
+                        System.out.println("Failed to save record: " + e.getMessage());
+                    }
+                }
+            }
             System.exit(0);
         }
+    }
+
+    private int calculateScore() { // Убрали параметр playerCastle
+        Hero playerHero = null;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (world[i][j] instanceof Hero hero && hero.isPlayer) {
+                    playerHero = hero;
+                    break;
+                }
+            }
+            if (playerHero != null) break;
+        }
+        if (playerHero == null) return 0;
+        int score = 10000 - globalTurnCounter * 50 + playerHero.gold * 10;
+        return Math.max(0, score);
     }
 
     public Props[][] endCastleBattle(Hero playerHero, int newY, int newX) {
@@ -658,4 +690,6 @@ public class AreaMap implements Serializable {
         }
         return false;
     }
+
+
 }
