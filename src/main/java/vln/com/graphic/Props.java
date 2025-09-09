@@ -1,6 +1,8 @@
 package vln.com.graphic;
 
-public class Props {
+import java.io.Serializable;
+
+public class Props implements Serializable {
 
     public String design;
 

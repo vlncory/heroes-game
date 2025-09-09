@@ -13,7 +13,7 @@ public class Play {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter your name: ");
-        String userName = scanner.nextLine();
+        String userName = scanner.nextLine().trim();
         System.out.println("Welcome, " + userName + "!");
 
         while (true) {
@@ -22,9 +22,10 @@ public class Play {
 
             switch (choice) {
                 case "1" -> startGame(userName, scanner);
-                case "2" -> editMap(scanner);
-                case "3" -> System.out.println("\nThe leaderboard is in development...");
-                case "4" -> {
+                case "2" -> loadGame(scanner, userName);
+                case "3" -> editMap(scanner);
+                case "4" -> System.out.println("\nThe leaderboard is in development...");
+                case "5" -> {
                     System.out.println("Exiting the game...");
                     scanner.close();
                     return;
@@ -36,29 +37,30 @@ public class Play {
 
     private static void printMainMenu() {
         System.out.println("\n=== Main Menu ===");
-        System.out.println("1. Play");
-        System.out.println("2. Map editor");
-        System.out.println("3. Records");
-        System.out.println("4. Quit");
+        System.out.println("1. New game");
+        System.out.println("2. Load game");
+        System.out.println("3. Map editor");
+        System.out.println("4. Records");
+        System.out.println("5. Quit");
         System.out.print("Choose an option: ");
     }
 
     private static void startGame(String userName, Scanner scanner) {
         Hero[] heroes = initializeHeroes();
 
-        AreaMap map = chooseMap(heroes, scanner);
+        AreaMap map = chooseMap(heroes, scanner, userName);
         if (map == null) {
-            return; // Вернулись в меню
+            return;
         }
 
         map.updateDisplay();
         System.out.println("\n=== GAME ===");
-        System.out.println("WASD - movement & Q - exit");
+        System.out.println("WASD - movement, P - save, Q - exit");
 
         gameLoop(map, heroes, scanner);
     }
 
-    private static AreaMap chooseMap(Hero[] heroes, Scanner scanner) {
+    private static AreaMap chooseMap(Hero[] heroes, Scanner scanner, String userName) {
         while (true) {
             System.out.println("\n=== Choose Map ===");
             System.out.println("1. Standard map");
@@ -69,10 +71,10 @@ public class Play {
 
             switch (choice) {
                 case "1" -> {
-                    return new AreaMap(10, 10, heroes, true);
+                    return new AreaMap(10, 10, heroes, true, userName);
                 }
                 case "2" -> {
-                    return chooseCustomMap(heroes, scanner);
+                    return chooseCustomMap(heroes, scanner, userName);
                 }
                 case "3" -> {
                     return null;
@@ -82,8 +84,8 @@ public class Play {
         }
     }
 
-    private static AreaMap chooseCustomMap(Hero[] heroes, Scanner scanner) {
-        File mapsDir = new File("src/main/java/vln/com/maps/");
+    private static AreaMap chooseCustomMap(Hero[] heroes, Scanner scanner, String userName) {
+        File mapsDir = new File("src/main/resources/maps/");
         if (!mapsDir.exists() || !mapsDir.isDirectory()) {
             System.out.println("No custom maps available.");
             return null;
@@ -112,7 +114,7 @@ public class Play {
             }
             if (index >= 0 && index < mapFiles.length) {
                 String mapName = mapFiles[index].getName().replace(".map", "");
-                return new AreaMap(mapName, heroes);
+                return new AreaMap(mapName, heroes, userName);
             } else {
                 System.out.println("Invalid choice.");
             }
@@ -144,6 +146,18 @@ public class Play {
                     case "s" -> map.moveHero(heroes[0], 0, 1);
                     case "a" -> map.moveHero(heroes[0], -1, 0);
                     case "d" -> map.moveHero(heroes[0], 1, 0);
+                    case "p" -> {
+                        if (!AreaMap.isBattleStarted) {
+                            try {
+                                map.saveGame("manual_save_" + System.currentTimeMillis(), heroes);
+                                System.out.println("Game saved!");
+                            } catch (IOException e) {
+                                System.out.println("Save failed: " + e.getMessage());
+                            }
+                        } else {
+                            System.out.println("Cannot save during battle!");
+                        }
+                    }
                     case "q" -> {
                         System.out.println("Exiting game...");
                         return;
@@ -163,8 +177,53 @@ public class Play {
         }
     }
 
+    private static void loadGame(Scanner scanner, String userName) {
+        File savesDir = new File("src/main/saves/" + userName);
+        if (!savesDir.exists() || !savesDir.isDirectory()) {
+            System.out.println("No saves available.");
+            return;
+        }
+
+        File[] saveFiles = savesDir.listFiles((_, name) -> name.endsWith(".sav"));
+
+        if (saveFiles == null || saveFiles.length == 0) {
+            System.out.println("No saves found.");
+            return;
+        }
+
+        System.out.println("\nAvailable saves:");
+        for (int i = 0; i < saveFiles.length; i++) {
+            String name = saveFiles[i].getName().replace(".sav", "");
+            System.out.println((i + 1) + ". " + name);
+        }
+        System.out.println((saveFiles.length + 1) + ". Back");
+        System.out.print("Choose a save: ");
+
+        String input = scanner.nextLine();
+        try {
+            int index = Integer.parseInt(input) - 1;
+            if (index == saveFiles.length) {
+                return;
+            }
+            if (index >= 0 && index < saveFiles.length) {
+                String saveName = saveFiles[index].getName().replace(".sav", "");
+                Hero[] heroes = initializeHeroes();
+                AreaMap map = AreaMap.loadGame(saveName, userName, heroes);
+                map.updateDisplay();
+                System.out.println("\n=== GAME LOADED ===");
+                gameLoop(map, heroes, scanner);
+            } else {
+                System.out.println("Invalid choice.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading save: " + e.getMessage());
+        }
+    }
+
     private static void editMap(Scanner scanner) {
-        File mapsDir = new File("src/main/java/vln/com/maps/");
+        File mapsDir = new File("src/main/resources/maps/");
         File[] mapFiles = mapsDir.exists() && mapsDir.isDirectory() ?
                 mapsDir.listFiles((_, name) -> name.endsWith(".map")) : new File[0];
 
@@ -188,22 +247,20 @@ public class Play {
             try {
                 int index = Integer.parseInt(input) - 1;
                 if (index == mapFiles.length) {
-                    // Создать новую карту
+                    // Create new map
                     AreaMap editorMap = new AreaMap(10, 10, null, false);
                     editorMap.editMode(scanner);
-                    // Обновляем список файлов после редактирования
-                    mapFiles = mapsDir.exists() && mapsDir.isDirectory() ?
-                            mapsDir.listFiles((_, name) -> name.endsWith(".map")) : new File[0];
+                    // Update file list after editing
+                    mapFiles = mapsDir.listFiles((_, name) -> name.endsWith(".map"));
                 } else if (index == mapFiles.length + 1) {
-                    // Вернуться в главное меню
+                    // Back to main menu
                     return;
                 } else if (index >= 0 && index < mapFiles.length) {
-                    // Выбрана существующая карта
+                    // Selected existing map
                     String mapName = mapFiles[index].getName().replace(".map", "");
                     if (handleMapOptions(mapName, scanner)) {
-                        // Обновляем список файлов после удаления
-                        mapFiles = mapsDir.exists() && mapsDir.isDirectory() ?
-                                mapsDir.listFiles((_, name) -> name.endsWith(".map")) : new File[0];
+                        // Update file list after deletion
+                        mapFiles = mapsDir.listFiles((_, name) -> name.endsWith(".map"));
                     }
                 } else {
                     System.out.println("Invalid choice.");
@@ -226,24 +283,24 @@ public class Play {
             switch (choice) {
                 case "1" -> {
                     try {
-                        AreaMap editorMap = new AreaMap(mapName, null); // Загружаем карту без героев
+                        AreaMap editorMap = new AreaMap(mapName, null);
                         editorMap.editMode(scanner);
-                        return true; // Возвращаем true, чтобы обновить список файлов
+                        return false; // No need to update list after edit
                     } catch (IOException e) {
                         System.out.println("Error loading map: " + e.getMessage());
                     }
                 }
                 case "2" -> {
-                    File mapFile = new File("src/main/java/vln/com/maps/" + mapName + ".map");
+                    File mapFile = new File("src/main/resources/maps/" + mapName + ".map");
                     if (mapFile.delete()) {
                         System.out.println("Map " + mapName + " deleted successfully.");
-                        return true; // Обновляем список файлов
+                        return true; // Update list after deletion
                     } else {
                         System.out.println("Error deleting map.");
                     }
                 }
                 case "3" -> {
-                    return false; // Не обновляем список
+                    return false;
                 }
                 default -> System.out.println("Invalid input! Try again");
             }

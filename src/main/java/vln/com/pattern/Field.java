@@ -1,6 +1,8 @@
 package vln.com.pattern;
 
-public class Field extends Road {
+import java.io.Serializable;
+
+public class Field extends Road implements Serializable {
 
     public Field() {
         this.path = 2;

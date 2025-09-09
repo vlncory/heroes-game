@@ -1,6 +1,8 @@
 package vln.com.units;
 
-public class Cavalryman extends Unit {
+import java.io.Serializable;
+
+public class Cavalryman extends Unit implements Serializable {
 
     public Cavalryman(int count) {
         this.cost = 15;

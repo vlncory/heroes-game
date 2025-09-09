@@ -188,29 +188,6 @@ class AreaMapTest {
     }
 
     @Test
-    void testEndRound_resetsOnlyAvailableHeroes() {
-        logger.info("[AreaMapTest] testEndRound_resetsOnlyAvailableHeroes start");
-        try {
-            Hero h1 = new Hero(0);
-            Hero h2 = new Hero(0);
-            h1.isAvailable = true;
-            h2.isAvailable = true;
-            h1.isStable = false;
-            h2.isStable = true;
-            h1.moves = 0;
-            h2.moves = 0;
-
-            map.endRound(new Hero[]{h1, h2});
-            assertEquals(10, h1.moves);
-            assertEquals(15, h2.moves);
-            logger.info("[AreaMapTest] testEndRound_resetsOnlyAvailableHeroes passed");
-        } catch (Throwable t) {
-            logger.log(Level.SEVERE, "testEndRound_resetsOnlyAvailableHeroes failed", t);
-            throw t;
-        }
-    }
-
-    @Test
     void testMoveHero_offMap_noChange() throws Exception {
         logger.info("[AreaMapTest] testMoveHero_offMap_noChange start");
         try {

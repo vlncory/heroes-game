@@ -5,7 +5,9 @@ import java.util.Scanner;
 import vln.com.graphic.Props;
 import vln.com.pattern.Trail;
 
-public class Unit extends Props {
+import java.io.Serializable;
+
+public class Unit extends Props implements Serializable {
 
     protected int cost;
     public int HP;

@@ -5,7 +5,9 @@ import java.util.Random;
 import vln.com.graphic.Props;
 import vln.com.pattern.AreaMap;
 
-public class SmokeUnit extends Props {
+import java.io.Serializable;
+
+public class SmokeUnit extends Props implements Serializable {
 
     private final int smokeCenterY;
     private final int smokeCenterX;

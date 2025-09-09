@@ -2,7 +2,9 @@ package vln.com.buildings;
 
 import vln.com.units.Hero;
 
-public class PlayerCastle extends Building {
+import java.io.Serializable;
+
+public class PlayerCastle extends Building implements Serializable {
 
     public PlayerCastle() {
         aegis = new Hero(100);

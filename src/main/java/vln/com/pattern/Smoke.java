@@ -2,7 +2,9 @@ package vln.com.pattern;
 
 import vln.com.graphic.Props;
 
-public class Smoke extends Props {
+import java.io.Serializable;
+
+public class Smoke extends Props implements Serializable {
 
     public Props originalProp;
 

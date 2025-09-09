@@ -3,9 +3,10 @@ package vln.com.units;
 import vln.com.graphic.Props;
 import vln.com.buildings.Building;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Hero extends Props {
+public class Hero extends Props implements Serializable {
 
     public int gold;
     public int heroX;

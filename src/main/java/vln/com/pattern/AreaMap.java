@@ -9,9 +9,9 @@ import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
 
-public class AreaMap {
+public class AreaMap implements Serializable {
 
-    public static AreaMap currentMap;
+    public static AreaMap currentMap; // transient, as it's static
     public static boolean compIsAlive = true;
     private final int height, width;
     public static boolean isBattleStarted = false;
@@ -20,6 +20,8 @@ public class AreaMap {
     private final boolean[][] smokeLayer;
     private int globalTurnCounter = 0;
     private Portal activePortal = null;
+    private final String username; // New field for username
+    private String currentMapName; // New field for current map name in editor
 
     public int getHeight() {
         return height;
@@ -29,25 +31,27 @@ public class AreaMap {
         return width;
     }
 
-    public AreaMap(int h, int w, Hero[] heroes, boolean init) {
+    public AreaMap(int h, int w, Hero[] heroes, boolean init, String username) {
         currentMap = this;
         height = h;
         width = w;
+        this.username = username;
         world = new Props[h][w];
         background = new Props[h][w];
         smokeLayer = new boolean[h][w];
 
         if (init) {
-            setupHeroes(heroes); // Сначала устанавливаем координаты героев
-            buildMap(); // Заполняем карту без героев
-            world[heroes[0].heroY][heroes[0].heroX] = heroes[0]; // Размещаем героев
+            setupHeroes(heroes); // Set coordinates first
+            buildMap(); // Fill map without heroes
+            world[heroes[0].heroY][heroes[0].heroX] = heroes[0]; // Place heroes
             world[heroes[1].heroY][heroes[1].heroX] = heroes[1];
-            addObstacles(); // Добавляем препятствия после героев
+            addObstacles(); // Add obstacles after heroes
         }
     }
 
-    public AreaMap(String mapFile, Hero[] heroes) throws IOException {
-        this(10, 10, heroes, false);
+    public AreaMap(String mapFile, Hero[] heroes, String username) throws IOException {
+        this(10, 10, heroes, false, username);
+        this.currentMapName = mapFile; // Set current map name for editing
         loadFromFile(mapFile);
         if (heroes != null) {
             setupHeroes(heroes);
@@ -55,8 +59,17 @@ public class AreaMap {
             world[heroes[1].heroY][heroes[1].heroX] = heroes[1];
             placeCastles();
         } else {
-            placeCastles(); // Только замки для редактора
+            placeCastles(); // Only castles for editor
         }
+    }
+
+    // Overload for editor without username
+    public AreaMap(int h, int w, Hero[] heroes, boolean init) {
+        this(h, w, heroes, init, null);
+    }
+
+    public AreaMap(String mapFile, Hero[] heroes) throws IOException {
+        this(mapFile, heroes, null);
     }
 
     private void setupHeroes(Hero[] h) {
@@ -81,7 +94,6 @@ public class AreaMap {
                 background[i][j] = terrain;
             }
         }
-        // Замки размещаются в buildCentralRow, герои — в конструкторе
     }
 
     private Props buildCentralRow(int j) {
@@ -101,7 +113,6 @@ public class AreaMap {
         world[height / 2][width - 1] = new BotCastle();
     }
 
-
     public void applySmoke(int centerY, int centerX) {
         for (int i = centerY - 2; i <= centerY + 2; i++) {
             for (int j = centerX - 2; j <= centerX + 2; j++) {
@@ -118,7 +129,7 @@ public class AreaMap {
                 if (i >= 0 && i < height && j >= 0 && j < width) {
                     smokeLayer[i][j] = false;
                     if (world[i][j] instanceof Smoke) {
-                        world[i][j] = background[i][j]; // Используем background вместо getOriginalTerrain
+                        world[i][j] = background[i][j];
                     }
                 }
             }
@@ -131,9 +142,11 @@ public class AreaMap {
         while (placed < 10) {
             int y = rand.nextInt(height);
             int x = rand.nextInt(width);
-            if (world[y][x] instanceof Field) {
+            if (world[y][x] instanceof Field &&
+                    !(y == height / 2 && x == 1) && // Protect player position
+                    !(y == height / 2 && x == width - 2)) { // Protect bot position
                 world[y][x] = new Obstacle();
-                background[y][x] = new Obstacle(); // Обновляем фон
+                background[y][x] = new Obstacle();
                 placed++;
             }
         }
@@ -167,7 +180,7 @@ public class AreaMap {
             }
             case SmokeUnit smokeUnit -> {
                 removeSmoke(smokeUnit.getSmokeCenterY(), smokeUnit.getSmokeCenterX());
-                world[newY][newX] = background[newY][newX]; // Используем background
+                world[newY][newX] = background[newY][newX];
                 System.out.println("The smoker has been destroyed! The smoke has cleared.");
                 updateDisplay();
                 countedAsMove = true;
@@ -335,7 +348,7 @@ public class AreaMap {
         int oldX = hero.heroX, oldY = hero.heroY;
         hero.heroX = x;
         hero.heroY = y;
-        world[oldY][oldX] = background[oldY][oldX]; // Восстанавливаем из background
+        world[oldY][oldX] = background[oldY][oldX];
         world[y][x] = hero;
         updateDisplay();
         return true;
@@ -378,12 +391,12 @@ public class AreaMap {
     public Props[][] endCastleBattle(Hero playerHero, int newY, int newX) {
         if (compIsAlive) {
             world[newY][newX] = new BotCastle();
-            background[newY][newX] = new Trail(); // Обновляем фон для замка
+            background[newY][newX] = new Trail();
             world[playerHero.heroY][playerHero.heroX] = playerHero;
         } else {
             int reward = ((Building) world[newY][newX]).aegis.gold;
             world[newY][newX] = new PlayerCastle();
-            background[newY][newX] = new Trail(); // Обновляем фон
+            background[newY][newX] = new Trail();
             if (playerHero.isPlayer) {
                 world[playerHero.heroY][playerHero.heroX] = playerHero;
                 System.out.println("You received " + reward + " gold from the enemy!");
@@ -406,9 +419,13 @@ public class AreaMap {
         world[computerHero.heroY][computerHero.heroX] = background[computerHero.heroY][computerHero.heroX];
         world[playerHero.heroY][playerHero.heroX] = playerHero;
         isBattleStarted = false;
+        playerHero.resetMoves();
+        if (username != null) {
+            autoSave(new Hero[]{playerHero, computerHero}, "bot_win");
+        }
+        updateDisplay();
         return world;
     }
-
 
     public boolean hasAnyMoves(Hero hero) {
         int x = hero.heroX;
@@ -430,30 +447,8 @@ public class AreaMap {
         return false;
     }
 
-    public void endRound(Hero[] heroes) {
-        for (Hero hero : heroes) {
-            if (hero.isAvailable && !isBattleStarted) {
-                hero.resetMoves();
-            }
-        }
-    }
-
-    public boolean endGame() {
-        if (world[height/2][0] instanceof PlayerCastle &&
-                world[height/2][width-1] instanceof PlayerCastle) {
-            System.out.println("You won!");
-            return true;
-        }
-        if (world[height/2][0] instanceof BotCastle &&
-                world[height/2][width-1] instanceof BotCastle) {
-            System.out.println("You lost!");
-            return true;
-        }
-        return false;
-    }
-
     private void loadFromFile(String mapFile) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("src/main/java/vln/com/maps/" + mapFile + ".map"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/maps/" + mapFile + ".map"));
         String line = reader.readLine();
         String[] sizes = line.split(" ");
         int h = Integer.parseInt(sizes[0]);
@@ -479,22 +474,22 @@ public class AreaMap {
     }
 
     public void saveToFile(String fileName) throws IOException {
-        File dir = new File("src/main/java/vln/com/maps");
+        File dir = new File("src/main/resources/maps/");
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
                 throw new IOException("Failed to create maps directory");
             }
         }
-        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/vln/com/maps/" + fileName + ".map"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(dir.getPath() + "/" + fileName + ".map"));
         writer.write(height + " " + width + "\n");
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 Props prop = background[i][j];
                 char type = switch (prop) {
                     case Trail _ -> 'T';
-                    case Field _ -> 'F';
                     case Obstacle _ -> 'O';
-                    default -> 'F';
+                    case Field _ -> 'F';
+                    default -> throw new IOException("Unexpected terrain type in background at (" + i + "," + j + "): " + prop.getClass().getSimpleName());
                 };
                 writer.write(type);
             }
@@ -504,7 +499,6 @@ public class AreaMap {
     }
 
     public void editMode(Scanner scanner) {
-        // Инициализируем фон только если карта новая (не загруженная)
         if (world[0][0] == null) {
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
@@ -543,11 +537,18 @@ public class AreaMap {
                 case "o" -> setTerrain(cursorY, cursorX, new Obstacle());
                 case "f" -> setTerrain(cursorY, cursorX, new Field());
                 case "e" -> {
-                    System.out.print("Enter map name: ");
-                    String name = scanner.nextLine().trim();
                     try {
-                        saveToFile(name);
-                        System.out.println("Map saved as " + name + ".map");
+                        if (currentMapName != null) {
+                            // Editing existing map: save under original name without prompt
+                            saveToFile(currentMapName);
+                            System.out.println("Map updated and saved as " + currentMapName + ".map");
+                        } else {
+                            // New map: prompt for name
+                            System.out.print("Enter map name: ");
+                            String name = scanner.nextLine().trim();
+                            saveToFile(name);
+                            System.out.println("Map saved as " + name + ".map");
+                        }
                     } catch (IOException e) {
                         System.out.println("Error saving map: " + e.getMessage());
                     }
@@ -587,5 +588,74 @@ public class AreaMap {
             }
             System.out.println();
         }
+    }
+
+    public void saveGame(String fileName, Hero[] heroes) throws IOException {
+        if (username == null) {
+            System.out.println("Cannot save without username");
+            return;
+        }
+        File dir = new File("src/main/saves/" + username);
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                throw new IOException("Failed to create saves directory");
+            }
+        }
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(dir.getPath() + "/" + fileName + ".sav"))) {
+            oos.writeObject(this);
+            oos.writeObject(heroes);
+            oos.writeObject(username);
+        }
+    }
+
+    public static AreaMap loadGame(String fileName, String username, Hero[] heroes) throws IOException, ClassNotFoundException {
+        File saveFile = new File("src/main/saves/" + username + "/" + fileName + ".sav");
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFile))) {
+            AreaMap map = (AreaMap) ois.readObject();
+            Hero[] loadedHeroes = (Hero[]) ois.readObject();
+            String loadedUsername = (String) ois.readObject();
+            if (!loadedUsername.equals(username)) {
+                throw new IOException("This save is not for user " + username);
+            }
+            heroes[0] = loadedHeroes[0];
+            heroes[1] = loadedHeroes[1];
+            // Re-init transient
+            currentMap = map;
+            return map;
+        }
+    }
+
+    private void autoSave(Hero[] heroes, String event) {
+        try {
+            saveGame("auto_save_" + event + "_" + System.currentTimeMillis(), heroes);
+            System.out.println("Auto-saved after " + event);
+        } catch (IOException e) {
+            System.out.println("Auto-save failed: " + e.getMessage());
+        }
+    }
+
+    public void endRound(Hero[] heroes) {
+        for (Hero hero : heroes) {
+            if (hero.isAvailable && !isBattleStarted) {
+                hero.resetMoves();
+            }
+        }
+        if (username != null) {
+            autoSave(heroes, "end_round");
+        }
+    }
+
+    public boolean endGame() {
+        if (world[height/2][0] instanceof PlayerCastle &&
+                world[height/2][width-1] instanceof PlayerCastle) {
+            System.out.println("You won!");
+            return true;
+        }
+        if (world[height/2][0] instanceof BotCastle &&
+                world[height/2][width-1] instanceof BotCastle) {
+            System.out.println("You lost!");
+            return true;
+        }
+        return false;
     }
 }

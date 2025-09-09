@@ -1,6 +1,8 @@
 package vln.com.units;
 
-public class Lancer extends Unit {
+import java.io.Serializable;
+
+public class Lancer extends Unit implements Serializable {
 
     public Lancer(int count) {
         this.cost = 5;
