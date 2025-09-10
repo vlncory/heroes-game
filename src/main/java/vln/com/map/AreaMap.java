@@ -1,4 +1,4 @@
-package vln.com.pattern;
+package vln.com.map;
 
 import vln.com.battle.FieldOfHonor;
 import vln.com.buildings.*;
@@ -8,6 +8,8 @@ import vln.com.units.*;
 
 import java.io.*;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class AreaMap implements Serializable {
@@ -23,6 +25,7 @@ public class AreaMap implements Serializable {
     private Portal activePortal = null;
     private final String username; // New field for username
     private String currentMapName; // New field for current map name in editor
+    private final List<DynamicObstacle> dynamicObstacles = new ArrayList<>();
 
     public int getHeight() {
         return height;
@@ -37,16 +40,17 @@ public class AreaMap implements Serializable {
         height = h;
         width = w;
         this.username = username;
+        this.currentMapName = "Standard"; // Set map name for standard map
         world = new Props[h][w];
         background = new Props[h][w];
         smokeLayer = new boolean[h][w];
 
         if (init) {
-            setupHeroes(heroes); // Set coordinates first
-            buildMap(); // Fill map without heroes
-            world[heroes[0].heroY][heroes[0].heroX] = heroes[0]; // Place heroes
+            setupHeroes(heroes);
+            buildMap();
+            world[heroes[0].heroY][heroes[0].heroX] = heroes[0];
             world[heroes[1].heroY][heroes[1].heroX] = heroes[1];
-            addObstacles(); // Add obstacles after heroes
+            addObstacles();
         }
     }
 
@@ -61,6 +65,17 @@ public class AreaMap implements Serializable {
             placeCastles();
         } else {
             placeCastles(); // Only castles for editor
+        }
+        try {
+            List<DynamicObstaclesConfig.ObstacleData> obstacles = DynamicObstaclesConfig.loadFromXML(mapFile);
+            for (DynamicObstaclesConfig.ObstacleData data : obstacles) {
+                DynamicObstacle obstacle = new DynamicObstacle(data.startX(), data.startY(), data.path());
+                world[data.startY()][data.startX()] = obstacle;
+                background[data.startY()][data.startX()] = new Field();
+                dynamicObstacles.add(obstacle);
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to load dynamic obstacles: " + e.getMessage());
         }
     }
 
@@ -165,8 +180,21 @@ public class AreaMap implements Serializable {
         Props cell = world[newY][newX];
         Props realCell = (cell instanceof Smoke smoke) ? smoke.originalProp : cell;
 
+        // Проверяем, не находится ли на клетке препятствие (включая движущееся)
+        if (realCell instanceof Obstacle || realCell instanceof DynamicObstacle) {
+            System.out.println("Don't step on obstacles! ⚠️");
+            return;
+        }
+
+        for (DynamicObstacle obstacle : dynamicObstacles) {
+            DynamicObstacle.Point nextPos = obstacle.getNextPosition();
+            if (nextPos.x() == newX && nextPos.y() == newY) {
+                System.out.println("An obstacle is moving to this cell! Wait for your turn.");
+                return;
+            }
+        }
+
         switch (realCell) {
-            case Obstacle _ -> System.out.println("Don't step on flowers! 🌸");
             case Portal portal -> {
                 handlePortalInteraction(hero, portal);
                 countedAsMove = true;
@@ -183,7 +211,6 @@ public class AreaMap implements Serializable {
                 removeSmoke(smokeUnit.getSmokeCenterY(), smokeUnit.getSmokeCenterX());
                 world[newY][newX] = background[newY][newX];
                 System.out.println("The smoker has been destroyed! The smoke has cleared.");
-                updateDisplay();
                 countedAsMove = true;
             }
             default -> {
@@ -204,7 +231,47 @@ public class AreaMap implements Serializable {
                     spawnSmokeUnit(activePortal);
                 }
             }
+            moveDynamicObstacles();
+            updateDisplay();
         }
+    }
+
+    private void moveDynamicObstacles() {
+        for (DynamicObstacle obstacle : dynamicObstacles) {
+            // Получаем следующую позицию
+            DynamicObstacle.Point next = obstacle.getNextPosition();
+
+            // Проверяем, можно ли переместиться на эту клетку
+            if (canObstacleMoveTo(next.y(), next.x())) {
+                // Освобождаем текущую клетку
+                world[obstacle.y][obstacle.x] = background[obstacle.y][obstacle.x];
+                // Перемещаем препятствие
+                obstacle.move();
+                // Занимаем новую клетку
+                world[obstacle.y][obstacle.x] = obstacle;
+            }
+        }
+    }
+
+    private boolean canObstacleMoveTo(int y, int x) {
+        // Проверяем, не находится ли на клетке герой или другое препятствие
+        Props cell = world[y][x];
+        if (cell instanceof Hero || cell instanceof Obstacle || cell instanceof DynamicObstacle) {
+            return false;
+        }
+
+        // Проверяем, не является ли клетка замком
+        if (cell instanceof PlayerCastle || cell instanceof BotCastle) {
+            return false;
+        }
+
+        // Если клетка под дымом, проверяем исходный объект
+        if (cell instanceof Smoke smoke) {
+            cell = smoke.originalProp;
+        }
+
+        // Препятствие может перемещаться только на Field или Trail
+        return cell instanceof Field || cell instanceof Trail;
     }
 
     private void spawnPortal() {
@@ -218,7 +285,6 @@ public class AreaMap implements Serializable {
         activePortal = new Portal();
         world[y][x] = activePortal;
         System.out.println("Portal appeared at (" + y + ", " + x + ")!");
-        updateDisplay();
     }
 
     private void handlePortalInteraction(Hero hero, Portal portal) {
@@ -231,7 +297,6 @@ public class AreaMap implements Serializable {
             hero.gold -= 20;
             removePortal(portal);
             System.out.println("Portal neutralized!");
-            updateDisplay();
         } else {
             spawnSmokeUnit(portal);
         }
@@ -253,7 +318,6 @@ public class AreaMap implements Serializable {
                 if (world[i][j] == portal) {
                     SmokeUnit smoke = new SmokeUnit(this);
                     world[i][j] = smoke;
-                    updateDisplay();
                     return;
                 }
             }
@@ -267,7 +331,6 @@ public class AreaMap implements Serializable {
                     if (i >= smokeUnit.getSmokeCenterY() - 2 && i <= smokeUnit.getSmokeCenterY() + 2 && j >= smokeUnit.getSmokeCenterX() - 2 && j <= smokeUnit.getSmokeCenterX() + 2) {
                         smokeLayer[i][j] = false;
                         System.out.println("Locator has detected a smoker!");
-                        updateDisplay();
                         return;
                     }
                 }
@@ -299,7 +362,6 @@ public class AreaMap implements Serializable {
 
             if (input.equals("Q")) {
                 shopping = false;
-                updateDisplay();
             } else {
                 b.handleBuildingPurchase(hero, input);
                 if (hero.gold > 0) offerUnits(hero, b, scan);
@@ -351,7 +413,6 @@ public class AreaMap implements Serializable {
         hero.heroY = y;
         world[oldY][oldX] = background[oldY][oldX];
         world[y][x] = hero;
-        updateDisplay();
         return true;
     }
 
@@ -388,8 +449,8 @@ public class AreaMap implements Serializable {
             if (world[height/2][0] instanceof PlayerCastle &&
                     world[height/2][width-1] instanceof PlayerCastle) {
                 if (username != null) {
-                    int score = calculateScore(); // Убрали playerCastle
-                    String mapName = (currentMapName != null) ? currentMapName : "Standard";
+                    int score = calculateScore();
+                    String mapName = currentMapName;
                     try {
                         Leaderboard leaderboard = Leaderboard.loadFromFile();
                         leaderboard.addRecord(username, score, mapName);
@@ -404,7 +465,7 @@ public class AreaMap implements Serializable {
         }
     }
 
-    private int calculateScore() { // Убрали параметр playerCastle
+    private int calculateScore() {
         Hero playerHero = null;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -416,7 +477,7 @@ public class AreaMap implements Serializable {
             if (playerHero != null) break;
         }
         if (playerHero == null) return 0;
-        int score = 10000 - globalTurnCounter * 50 + playerHero.gold * 10;
+        int score = 10000 - globalTurnCounter * 250 + playerHero.gold * 10;
         return Math.max(0, score);
     }
 
@@ -437,7 +498,7 @@ public class AreaMap implements Serializable {
                 world[playerHero.heroY][playerHero.heroX] = background[playerHero.heroY][playerHero.heroX];
             }
         }
-        updateDisplay();
+
         isBattleStarted = false;
         return world;
     }
@@ -455,7 +516,7 @@ public class AreaMap implements Serializable {
         if (username != null) {
             autoSave(new Hero[]{playerHero, computerHero}, "bot_win");
         }
-        updateDisplay();
+        // Добавляем обновление дисплея
         return world;
     }
 
@@ -464,14 +525,32 @@ public class AreaMap implements Serializable {
         int y = hero.heroY;
         int[] dx = {1, -1, 0, 0};
         int[] dy = {0, 0, 1, -1};
+
         for (int i = 0; i < dx.length; i++) {
             int nx = x + dx[i];
             int ny = y + dy[i];
+
             if (nx < 0 || nx >= width || ny < 0 || ny >= height) continue;
+
+            // Проверяем, не находится ли на клетке препятствие
             Props cell = world[ny][nx];
             Props real = (cell instanceof Smoke smoke) ? smoke.originalProp : cell;
+
+            if (real instanceof Obstacle || real instanceof DynamicObstacle) continue;
+
+            // Проверяем, не планирует ли препятствие переместиться на эту клетку
+            boolean cellWillBeOccupied = false;
+            for (DynamicObstacle obstacle : dynamicObstacles) {
+                DynamicObstacle.Point nextPos = obstacle.getNextPosition();
+                if (nextPos.x() == nx && nextPos.y() == ny) {
+                    cellWillBeOccupied = true;
+                    break;
+                }
+            }
+
+            if (cellWillBeOccupied) continue;
+
             int cost = (real instanceof Trail) ? 1 : 2;
-            if (real instanceof Obstacle) continue;
             if (hero.moves >= cost) {
                 return true;
             }
@@ -480,54 +559,79 @@ public class AreaMap implements Serializable {
     }
 
     private void loadFromFile(String mapFile) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/maps/" + mapFile + ".map"));
-        String line = reader.readLine();
-        String[] sizes = line.split(" ");
-        int h = Integer.parseInt(sizes[0]);
-        int w = Integer.parseInt(sizes[1]);
-        if (h != height || w != width) {
-            throw new IOException("Map size mismatch: expected 10x10");
+        String basePath = System.getProperty("user.dir");
+        File dir = new File(basePath, "src/main/resources/maps");
+        if (!dir.exists() && !dir.mkdirs()) {
+            throw new IOException("Failed to create maps directory: " + dir.getAbsolutePath());
         }
-        for (int i = 0; i < height; i++) {
-            line = reader.readLine();
-            for (int j = 0; j < width; j++) {
-                char type = line.charAt(j);
-                Props terrain = switch (type) {
-                    case 'T' -> new Trail();
-                    case 'F' -> new Field();
-                    case 'O' -> new Obstacle();
-                    default -> throw new IOException("Unknown terrain type: " + type);
-                };
-                world[i][j] = terrain;
-                background[i][j] = terrain;
+        File file = new File(dir, mapFile + ".map");
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line = reader.readLine();
+            String[] sizes = line.split(" ");
+            int h = Integer.parseInt(sizes[0]);
+            int w = Integer.parseInt(sizes[1]);
+            if (h != height || w != width) {
+                throw new IOException("Map size mismatch: expected 10x10, got " + h + "x" + w);
+            }
+
+            for (int i = 0; i < height; i++) {
+                line = reader.readLine();
+                if (line == null || line.length() < width) {
+                    throw new IOException("Invalid map file format at line " + (i + 2));
+                }
+                for (int j = 0; j < width; j++) {
+                    char type = line.charAt(j);
+                    Props prop = switch (type) {
+                        case 'T' -> new Trail();
+                        case 'F' -> new Field();
+                        case 'O' -> new Obstacle();
+                        case 'M' -> new Field(); // M is placeholder, data in XML
+                        case 'C', 'B' -> new Field(); // Treat castles as Field, placeCastles will override
+                        default -> throw new IOException("Unknown map symbol '" + type + "' at " + i + "," + j);
+                    };
+                    world[i][j] = prop;
+                    background[i][j] = prop;
+                }
             }
         }
-        reader.close();
+        placeCastles(); // Ensure castles are placed after loading
     }
 
     public void saveToFile(String fileName) throws IOException {
-        File dir = new File("src/main/resources/maps/");
-        if (!dir.exists()) {
-            if (!dir.mkdirs()) {
-                throw new IOException("Failed to create maps directory");
+        String basePath = System.getProperty("user.dir");
+        File dir = new File(basePath, "src/main/resources/maps");
+        if (!dir.exists() && !dir.mkdirs()) {
+            throw new IOException("Failed to create maps directory: " + dir.getAbsolutePath());
+        }
+        File file = new File(dir, fileName + ".map");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(height + " " + width + "\n");
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    Props prop = background[i][j];
+                    char type = switch (prop) {
+                        case Trail _ -> 'T';
+                        case Field _ -> 'F';
+                        case Obstacle _ -> 'O';
+                        case DynamicObstacle _ -> 'M';
+                        case PlayerCastle _, BotCastle _ -> 'F'; // Castles are handled by placeCastles
+                        default -> throw new IOException("Unknown Props type at " + i + "," + j + ": " + prop.getClass().getSimpleName());
+                    };
+                    writer.write(type);
+                }
+                writer.write("\n");
             }
         }
-        BufferedWriter writer = new BufferedWriter(new FileWriter(dir.getPath() + "/" + fileName + ".map"));
-        writer.write(height + " " + width + "\n");
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                Props prop = background[i][j];
-                char type = switch (prop) {
-                    case Trail _ -> 'T';
-                    case Obstacle _ -> 'O';
-                    case Field _ -> 'F';
-                    default -> throw new IOException("Unexpected terrain type in background at (" + i + "," + j + "): " + prop.getClass().getSimpleName());
-                };
-                writer.write(type);
-            }
-            writer.write("\n");
+
+        List<DynamicObstaclesConfig.ObstacleData> obstacles = new ArrayList<>();
+        for (DynamicObstacle obstacle : dynamicObstacles) {
+            obstacles.add(new DynamicObstaclesConfig.ObstacleData(obstacle.x, obstacle.y, obstacle.getPath()));
         }
-        writer.close();
+        try {
+            DynamicObstaclesConfig.saveToXML(fileName, obstacles);
+        } catch (Exception e) {
+            System.out.println("Failed to save dynamic obstacles: " + e.getMessage());
+        }
     }
 
     public void editMode(Scanner scanner) {
@@ -556,39 +660,85 @@ public class AreaMap implements Serializable {
 
         while (true) {
             updateEditDisplay(cursorY, cursorX);
-            System.out.println("Editor: WASD - move cursor, T - Trail, O - Obstacle, F - Field, E - save, Q - quit");
+            System.out.println("Editor: WASD - move cursor, T - Trail, O - Obstacle, F - Field, M - Moving Obstacle, E - save, Q - quit");
 
             String input = scanner.nextLine().trim().toLowerCase();
 
             switch (input) {
-                case "w" -> cursorY = Math.max(0, cursorY - 1);
-                case "s" -> cursorY = Math.min(height - 1, cursorY + 1);
-                case "a" -> cursorX = Math.max(0, cursorX - 1);
-                case "d" -> cursorX = Math.min(width - 1, cursorX + 1);
-                case "t" -> setTerrain(cursorY, cursorX, new Trail());
-                case "o" -> setTerrain(cursorY, cursorX, new Obstacle());
-                case "f" -> setTerrain(cursorY, cursorX, new Field());
-                case "e" -> {
+                case "w":
+                    cursorY = Math.max(0, cursorY - 1);
+                    break;
+                case "s":
+                    cursorY = Math.min(height - 1, cursorY + 1);
+                    break;
+                case "a":
+                    cursorX = Math.max(0, cursorX - 1);
+                    break;
+                case "d":
+                    cursorX = Math.min(width - 1, cursorX + 1);
+                    break;
+                case "t":
+                    setTerrain(cursorY, cursorX, new Trail());
+                    break;
+                case "o":
+                    setTerrain(cursorY, cursorX, new Obstacle());
+                    break;
+                case "f":
+                    setTerrain(cursorY, cursorX, new Field());
+                    break;
+                case "m":
+                    if (cursorX == 0 || cursorX == width - 1) {
+                        System.out.println("Cannot place moving obstacle at castle positions!");
+                        continue;
+                    }
+                    System.out.println("Enter path coordinates (x,y), one per line, empty line to finish:");
+                    List<DynamicObstacle.Point> path = new ArrayList<>();
+                    path.add(new DynamicObstacle.Point(cursorX, cursorY));
+                    while (true) {
+                        String line = scanner.nextLine().trim();
+                        if (line.isEmpty()) break;
+                        try {
+                            String[] coords = line.split(",");
+                            int x = Integer.parseInt(coords[0].trim());
+                            int y = Integer.parseInt(coords[1].trim());
+                            if (x < 0 || x >= width || y < 0 || y >= height || x == 0 || x == width - 1) {
+                                System.out.println("Invalid coordinates, try again!");
+                                continue;
+                            }
+                            path.add(new DynamicObstacle.Point(x, y));
+                        } catch (Exception e) {
+                            System.out.println("Invalid input, format: x,y");
+                        }
+                    }
+                    if (path.size() > 1) {
+                        DynamicObstacle obstacle = new DynamicObstacle(cursorX, cursorY, path);
+                        world[cursorY][cursorX] = obstacle;
+                        background[cursorY][cursorX] = new Field();
+                        dynamicObstacles.add(obstacle);
+                    } else {
+                        System.out.println("Path must have at least one additional point!");
+                    }
+                    break;
+                case "e":
                     try {
                         if (currentMapName != null) {
-                            // Editing existing map: save under original name without prompt
                             saveToFile(currentMapName);
                             System.out.println("Map updated and saved as " + currentMapName + ".map");
                         } else {
-                            // New map: prompt for name
                             System.out.print("Enter map name: ");
                             String name = scanner.nextLine().trim();
                             saveToFile(name);
+                            currentMapName = name; // Update currentMapName
                             System.out.println("Map saved as " + name + ".map");
                         }
                     } catch (IOException e) {
                         System.out.println("Error saving map: " + e.getMessage());
                     }
-                }
-                case "q" -> {
+                    break;
+                case "q":
                     return;
-                }
-                default -> System.out.println("Invalid input");
+                default:
+                    System.out.println("Invalid input");
             }
         }
     }
@@ -609,13 +759,7 @@ public class AreaMap implements Serializable {
                 if (i == cursorY && j == cursorX) {
                     System.out.print("@ ");
                 } else {
-                    if (i == height / 2 && j == 0) {
-                        System.out.print(new PlayerCastle() + " ");
-                    } else if (i == height / 2 && j == width - 1) {
-                        System.out.print(new BotCastle() + " ");
-                    } else {
-                        System.out.print(world[i][j] + " ");
-                    }
+                    System.out.print(world[i][j] + " ");
                 }
             }
             System.out.println();
@@ -627,13 +771,13 @@ public class AreaMap implements Serializable {
             System.out.println("Cannot save without username");
             return;
         }
-        File dir = new File("src/main/saves/" + username);
-        if (!dir.exists()) {
-            if (!dir.mkdirs()) {
-                throw new IOException("Failed to create saves directory");
-            }
+        String basePath = System.getProperty("user.dir");
+        File dir = new File(basePath, "src/main/saves/" + username);
+        if (!dir.exists() && !dir.mkdirs()) {
+            throw new IOException("Failed to create saves directory: " + dir.getAbsolutePath());
         }
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(dir.getPath() + "/" + fileName + ".sav"))) {
+        File file = new File(dir, fileName + ".sav");
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             oos.writeObject(this);
             oos.writeObject(heroes);
             oos.writeObject(username);
@@ -641,7 +785,9 @@ public class AreaMap implements Serializable {
     }
 
     public static AreaMap loadGame(String fileName, String username, Hero[] heroes) throws IOException, ClassNotFoundException {
-        File saveFile = new File("src/main/saves/" + username + "/" + fileName + ".sav");
+        String basePath = System.getProperty("user.dir");
+        File dir = new File(basePath, "src/main/saves/" + username);
+        File saveFile = new File(dir, fileName + ".sav");
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFile))) {
             AreaMap map = (AreaMap) ois.readObject();
             Hero[] loadedHeroes = (Hero[]) ois.readObject();
@@ -651,7 +797,6 @@ public class AreaMap implements Serializable {
             }
             heroes[0] = loadedHeroes[0];
             heroes[1] = loadedHeroes[1];
-            // Re-init transient
             currentMap = map;
             return map;
         }
@@ -690,6 +835,4 @@ public class AreaMap implements Serializable {
         }
         return false;
     }
-
-
 }

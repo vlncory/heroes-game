@@ -3,7 +3,7 @@ package vln.com.units;
 import java.util.Scanner;
 
 import vln.com.graphic.Props;
-import vln.com.pattern.Trail;
+import vln.com.map.Trail;
 
 import java.io.Serializable;
 

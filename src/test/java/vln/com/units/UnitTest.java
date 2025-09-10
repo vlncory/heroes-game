@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import vln.com.graphic.Props;
-import vln.com.pattern.Trail;
+import vln.com.map.Trail;
 
 class UnitTest {
     private static final Logger logger = Logger.getLogger(UnitTest.class.getName());

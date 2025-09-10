@@ -3,7 +3,7 @@ package vln.com.units;
 import java.util.Random;
 
 import vln.com.graphic.Props;
-import vln.com.pattern.AreaMap;
+import vln.com.map.AreaMap;
 
 import java.io.Serializable;
 

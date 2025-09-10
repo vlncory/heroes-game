@@ -1,6 +1,6 @@
 package vln.com;
 
-import vln.com.pattern.AreaMap;
+import vln.com.map.AreaMap;
 import vln.com.leaderboard.Leaderboard;
 import vln.com.units.Hero;
 
