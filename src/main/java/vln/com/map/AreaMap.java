@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class AreaMap implements Serializable {
 
-    public static AreaMap currentMap; // transient, as it's static
+    public static AreaMap currentMap;
     public static boolean compIsAlive = true;
     private final int height, width;
     public static boolean isBattleStarted = false;
@@ -23,8 +23,8 @@ public class AreaMap implements Serializable {
     private final boolean[][] smokeLayer;
     private int globalTurnCounter = 0;
     private Portal activePortal = null;
-    private final String username; // New field for username
-    private String currentMapName; // New field for current map name in editor
+    private final String username;
+    private String currentMapName;
     private final List<DynamicObstacle> dynamicObstacles = new ArrayList<>();
 
     public int getHeight() {
@@ -40,7 +40,7 @@ public class AreaMap implements Serializable {
         height = h;
         width = w;
         this.username = username;
-        this.currentMapName = "Standard"; // Set map name for standard map
+        this.currentMapName = "Standard";
         world = new Props[h][w];
         background = new Props[h][w];
         smokeLayer = new boolean[h][w];
@@ -56,7 +56,7 @@ public class AreaMap implements Serializable {
 
     public AreaMap(String mapFile, Hero[] heroes, String username) throws IOException {
         this(10, 10, heroes, false, username);
-        this.currentMapName = mapFile; // Set current map name for editing
+        this.currentMapName = mapFile;
         loadFromFile(mapFile);
         if (heroes != null) {
             setupHeroes(heroes);

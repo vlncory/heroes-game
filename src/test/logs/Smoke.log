@@ -70,3 +70,19 @@ Sep 10, 2025 9:23:23 PM vln.com.map.SmokeTest originalProp_ShouldBeStoredCorrect
 INFO: [SmokeTest] originalProp_ShouldBeStoredCorrectly start
 Sep 10, 2025 9:23:23 PM vln.com.map.SmokeTest originalProp_ShouldBeStoredCorrectly
 INFO: [SmokeTest] originalProp_ShouldBeStoredCorrectly passed
+Sep 13, 2025 9:59:53 AM vln.com.map.SmokeTest smokeDesign_ShouldBeCorrect
+INFO: [SmokeTest] smokeDesign_ShouldBeCorrect start
+Sep 13, 2025 9:59:53 AM vln.com.map.SmokeTest smokeDesign_ShouldBeCorrect
+INFO: [SmokeTest] smokeDesign_ShouldBeCorrect passed
+Sep 13, 2025 9:59:53 AM vln.com.map.SmokeTest originalProp_ShouldBeStoredCorrectly
+INFO: [SmokeTest] originalProp_ShouldBeStoredCorrectly start
+Sep 13, 2025 9:59:53 AM vln.com.map.SmokeTest originalProp_ShouldBeStoredCorrectly
+INFO: [SmokeTest] originalProp_ShouldBeStoredCorrectly passed
+Sep 13, 2025 10:30:49 AM vln.com.map.SmokeTest smokeDesign_ShouldBeCorrect
+INFO: [SmokeTest] smokeDesign_ShouldBeCorrect start
+Sep 13, 2025 10:30:49 AM vln.com.map.SmokeTest smokeDesign_ShouldBeCorrect
+INFO: [SmokeTest] smokeDesign_ShouldBeCorrect passed
+Sep 13, 2025 10:30:49 AM vln.com.map.SmokeTest originalProp_ShouldBeStoredCorrectly
+INFO: [SmokeTest] originalProp_ShouldBeStoredCorrectly start
+Sep 13, 2025 10:30:49 AM vln.com.map.SmokeTest originalProp_ShouldBeStoredCorrectly
+INFO: [SmokeTest] originalProp_ShouldBeStoredCorrectly passed

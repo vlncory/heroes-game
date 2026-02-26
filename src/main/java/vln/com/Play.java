@@ -124,7 +124,7 @@ public class Play {
             System.out.println((i + 1) + ". " + name);
         }
         System.out.println((mapFiles.length + 1) + ". Back");
-        System.out.print("Choose a map: ");
+        System.out.print("Choose an option: ");
 
         String input = scanner.nextLine();
         try {
@@ -217,7 +217,7 @@ public class Play {
             System.out.println((i + 1) + ". " + name);
         }
         System.out.println((saveFiles.length + 1) + ". Back");
-        System.out.print("Choose a save: ");
+        System.out.print("Choose an option: ");
 
         String input = scanner.nextLine();
         try {

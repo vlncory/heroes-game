@@ -147,13 +147,16 @@ class FieldOfHonorTest {
 
     @Test
     public void testMoveTowardsPlayer() throws Exception {
-
         logger.info("testMoveTowardsPlayer test started successfully");
 
         PrintStream originalOut = System.out;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
         System.setOut(new PrintStream(bos));
         logger.warning("The system output has been replaced");
+
+        System.out.println("This text is intercepted and is not visible in the console!");
+        System.out.print("Another intercepted text");
 
         Unit mover = new Unit();
         mover.isPlayerUnit = false;
@@ -167,7 +170,15 @@ class FieldOfHonorTest {
         gridField.setAccessible(true);
         Props[][] grid = (Props[][]) gridField.get(field);
         grid[2][5] = mover;
+
         System.setOut(originalOut);
+
+        String capturedOutput = bos.toString();
+        logger.info("Intercepted output: " + capturedOutput);
+        assertTrue(capturedOutput.contains("This text is intercepted"),
+                "We should have intercepted the first text");
+        assertTrue(capturedOutput.contains("Another intercepted text"),
+                "We should have intercepted the second text");
 
         try {
             Method moveMethod = FieldOfHonor.class.getDeclaredMethod("moveTowardsPlayer", Unit.class);

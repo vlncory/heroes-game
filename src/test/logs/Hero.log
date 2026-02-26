@@ -718,3 +718,163 @@ Sep 10, 2025 9:23:23 PM vln.com.units.HeroTest testUnitPurchase_withoutPrerequis
 INFO: [HeroTest] testUnitPurchase_withoutPrerequisites_noPurchase start
 Sep 10, 2025 9:23:23 PM vln.com.units.HeroTest testUnitPurchase_withoutPrerequisites_noPurchase
 INFO: [HeroTest] testUnitPurchase_withoutPrerequisites_noPurchase passed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_invalidChoice_noChange
+INFO: [HeroTest] testUnitPurchase_invalidChoice_noChange start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_invalidChoice_noChange
+INFO: [HeroTest] testUnitPurchase_invalidChoice_noChange passed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testResetMoves_whenNotStable
+INFO: [HeroTest] testResetMoves_whenNotStable start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testResetMoves_whenNotStable
+INFO: [HeroTest] testResetMoves_whenNotStable passed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_buyArcher_partialGoldRemaining
+INFO: [HeroTest] testUnitPurchase_buyArcher_partialGoldRemaining start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_buyArcher_partialGoldRemaining
+INFO: [HeroTest] testUnitPurchase_buyArcher_partialGoldRemaining passed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_buyCavalryman_zeroIfInsufficient
+INFO: [HeroTest] testUnitPurchase_buyCavalryman_zeroIfInsufficient start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_buyCavalryman_zeroIfInsufficient
+INFO: [HeroTest] testUnitPurchase_buyCavalryman_zeroIfInsufficient passed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_buySwordsman_exactGold
+INFO: [HeroTest] testUnitPurchase_buySwordsman_exactGold start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_buySwordsman_exactGold
+INFO: [HeroTest] testUnitPurchase_buySwordsman_exactGold passed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_buyPaladin_multiple
+INFO: [HeroTest] testUnitPurchase_buyPaladin_multiple start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_buyPaladin_multiple
+INFO: [HeroTest] testUnitPurchase_buyPaladin_multiple passed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testSetSymbol
+INFO: [HeroTest] testSetSymbol start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testSetSymbol
+INFO: [HeroTest] testSetSymbol passed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testResetMoves_whenStable
+INFO: [HeroTest] testResetMoves_whenStable start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testResetMoves_whenStable
+INFO: [HeroTest] testResetMoves_whenStable passed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_buyLancer
+INFO: [HeroTest] testUnitPurchase_buyLancer start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_buyLancer
+INFO: [HeroTest] testUnitPurchase_buyLancer passed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_withoutPrerequisites_noPurchase
+INFO: [HeroTest] testUnitPurchase_withoutPrerequisites_noPurchase start
+Sep 13, 2025 9:59:53 AM vln.com.units.HeroTest testUnitPurchase_withoutPrerequisites_noPurchase
+INFO: [HeroTest] testUnitPurchase_withoutPrerequisites_noPurchase passed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_invalidChoice_noChange
+INFO: [HeroTest] testUnitPurchase_invalidChoice_noChange start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_invalidChoice_noChange
+INFO: [HeroTest] testUnitPurchase_invalidChoice_noChange passed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testResetMoves_whenNotStable
+INFO: [HeroTest] testResetMoves_whenNotStable start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testResetMoves_whenNotStable
+INFO: [HeroTest] testResetMoves_whenNotStable passed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_buyArcher_partialGoldRemaining
+INFO: [HeroTest] testUnitPurchase_buyArcher_partialGoldRemaining start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_buyArcher_partialGoldRemaining
+INFO: [HeroTest] testUnitPurchase_buyArcher_partialGoldRemaining passed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_buyCavalryman_zeroIfInsufficient
+INFO: [HeroTest] testUnitPurchase_buyCavalryman_zeroIfInsufficient start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_buyCavalryman_zeroIfInsufficient
+INFO: [HeroTest] testUnitPurchase_buyCavalryman_zeroIfInsufficient passed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_buySwordsman_exactGold
+INFO: [HeroTest] testUnitPurchase_buySwordsman_exactGold start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_buySwordsman_exactGold
+INFO: [HeroTest] testUnitPurchase_buySwordsman_exactGold passed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_buyPaladin_multiple
+INFO: [HeroTest] testUnitPurchase_buyPaladin_multiple start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_buyPaladin_multiple
+INFO: [HeroTest] testUnitPurchase_buyPaladin_multiple passed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testSetSymbol
+INFO: [HeroTest] testSetSymbol start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testSetSymbol
+INFO: [HeroTest] testSetSymbol passed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testResetMoves_whenStable
+INFO: [HeroTest] testResetMoves_whenStable start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testResetMoves_whenStable
+INFO: [HeroTest] testResetMoves_whenStable passed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_buyLancer
+INFO: [HeroTest] testUnitPurchase_buyLancer start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_buyLancer
+INFO: [HeroTest] testUnitPurchase_buyLancer passed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest init
+INFO: [HeroTest] init completed
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_withoutPrerequisites_noPurchase
+INFO: [HeroTest] testUnitPurchase_withoutPrerequisites_noPurchase start
+Sep 13, 2025 10:30:49 AM vln.com.units.HeroTest testUnitPurchase_withoutPrerequisites_noPurchase
+INFO: [HeroTest] testUnitPurchase_withoutPrerequisites_noPurchase passed
