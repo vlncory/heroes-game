@@ -2,9 +2,7 @@ package vln.com.map;
 
 import vln.com.graphic.Props;
 
-import java.io.Serializable;
-
-public class Smoke extends Props implements Serializable {
+public class Smoke extends Props {
 
     public Props originalProp;
 

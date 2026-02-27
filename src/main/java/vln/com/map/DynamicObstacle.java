@@ -5,8 +5,8 @@ import vln.com.graphic.Props;
 import java.io.Serializable;
 import java.util.List;
 
-public class DynamicObstacle extends Props implements Serializable {
-    public int x, y; // Поля для позиции
+public class DynamicObstacle extends Props {
+    public int x, y;
     private final List<Point> path;
     private int currentPathIndex;
 
@@ -34,5 +34,6 @@ public class DynamicObstacle extends Props implements Serializable {
         return path;
     }
 
-    public record Point(int x, int y) implements Serializable {}
+    public record Point(int x, int y) implements Serializable {
+    }
 }

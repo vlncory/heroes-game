@@ -5,15 +5,18 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DynamicObstaclesConfig {
-    public record ObstacleData(int startX, int startY, List<DynamicObstacle.Point> path) {}
+    public record ObstacleData(int startX, int startY, List<DynamicObstacle.Point> path) {
+    }
 
     public static void saveToXML(String mapName, List<ObstacleData> obstacles) throws Exception {
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
@@ -38,7 +41,6 @@ public class DynamicObstaclesConfig {
             root.appendChild(obstacleEl);
         }
 
-        // Resolve the base directory relative to user.dir
         String basePath = System.getProperty("user.dir");
         File dir = new File(basePath, "src/main/resources/maps");
         if (!dir.exists() && !dir.mkdirs()) {

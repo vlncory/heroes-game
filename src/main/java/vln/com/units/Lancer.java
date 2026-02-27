@@ -1,8 +1,6 @@
 package vln.com.units;
 
-import java.io.Serializable;
-
-public class Lancer extends Unit implements Serializable {
+public class Lancer extends Unit {
 
     public Lancer(int count, boolean isSalonUp, boolean isHotelUp) {
         this.cost = 5;

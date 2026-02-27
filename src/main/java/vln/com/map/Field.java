@@ -1,8 +1,6 @@
 package vln.com.map;
 
-import java.io.Serializable;
-
-public class Field extends Road implements Serializable {
+public class Field extends Road {
 
     public Field() {
         this.path = 2;

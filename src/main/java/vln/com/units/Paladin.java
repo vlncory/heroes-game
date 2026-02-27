@@ -1,8 +1,6 @@
 package vln.com.units;
 
-import java.io.Serializable;
-
-public class Paladin extends Unit implements Serializable {
+public class Paladin extends Unit {
 
     public Paladin(int count, boolean isSalonUp, boolean isHotelUp) {
         this.cost = 25;

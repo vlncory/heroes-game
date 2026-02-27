@@ -267,19 +267,14 @@ public class Play {
             try {
                 int index = Integer.parseInt(input) - 1;
                 if (index == mapFiles.length) {
-                    // Create new map
                     AreaMap editorMap = new AreaMap(10, 10, null, false);
                     editorMap.editMode(scanner);
-                    // Update file list after editing
                     mapFiles = mapsDir.listFiles((_, name) -> name.endsWith(".map"));
                 } else if (index == mapFiles.length + 1) {
-                    // Back to main menu
                     return;
                 } else if (index >= 0 && index < mapFiles.length) {
-                    // Selected existing map
                     String mapName = mapFiles[index].getName().replace(".map", "");
                     if (handleMapOptions(mapName, scanner)) {
-                        // Update file list after deletion
                         mapFiles = mapsDir.listFiles((_, name) -> name.endsWith(".map"));
                     }
                 } else {
@@ -305,7 +300,7 @@ public class Play {
                     try {
                         AreaMap editorMap = new AreaMap(mapName, null);
                         editorMap.editMode(scanner);
-                        return false; // No need to update list after edit
+                        return false;
                     } catch (IOException e) {
                         System.out.println("Error loading map: " + e.getMessage());
                     }
@@ -314,7 +309,7 @@ public class Play {
                     File mapFile = new File("src/main/resources/maps/" + mapName + ".map");
                     if (mapFile.delete()) {
                         System.out.println("Map " + mapName + " deleted successfully.");
-                        return true; // Update list after deletion
+                        return true;
                     } else {
                         System.out.println("Error deleting map.");
                     }

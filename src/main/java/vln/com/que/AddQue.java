@@ -28,7 +28,7 @@ public class AddQue extends Thread {
 
         synchronized (list) {
             list.add("END_OF_QUEUE");
-            list.notify(); // уведомляем, что очередь закончена
+            list.notify();
         }
     }
 }

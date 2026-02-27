@@ -2,9 +2,7 @@ package vln.com.map;
 
 import vln.com.graphic.Props;
 
-import java.io.Serializable;
-
-public class Portal extends Props implements Serializable {
+public class Portal extends Props {
 
     public int turnsSinceSpawn = 0;
 

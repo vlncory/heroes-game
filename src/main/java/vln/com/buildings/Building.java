@@ -4,9 +4,7 @@ import vln.com.units.Hero;
 import vln.com.map.AreaMap;
 import vln.com.graphic.Props;
 
-import java.io.Serializable;
-
-public class Building extends Props implements Serializable {
+public class Building extends Props {
     public Hero aegis;
     public boolean isPlayerTower;
 

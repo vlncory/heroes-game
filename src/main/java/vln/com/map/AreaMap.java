@@ -74,7 +74,7 @@ public class AreaMap implements Serializable {
             world[heroes[1].heroY][heroes[1].heroX] = heroes[1];
             placeCastles();
         } else {
-            placeCastles(); // Only castles for editor
+            placeCastles();
         }
         try {
             List<DynamicObstaclesConfig.ObstacleData> obstacles = DynamicObstaclesConfig.loadFromXML(mapFile);
@@ -89,7 +89,6 @@ public class AreaMap implements Serializable {
         }
     }
 
-    // Overload for editor without username
     public AreaMap(int h, int w, Hero[] heroes, boolean init) {
         this(h, w, heroes, init, null);
     }
@@ -100,7 +99,7 @@ public class AreaMap implements Serializable {
 
     private void addSpecialBuildings() {
         Random rand = new Random();
-        // Расставляем наши уникальные здания
+
         placeUniqueBuilding(this.cafe, rand);
         placeUniqueBuilding(this.salon, rand);
         placeUniqueBuilding(this.hotel, rand);
@@ -111,14 +110,11 @@ public class AreaMap implements Serializable {
             int y = rand.nextInt(height);
             int x = rand.nextInt(width);
 
-            // Проверяем, что это обычное поле и оно не находится на линии спавна героев/замков
             if (world[y][x] instanceof Field &&
                     !(y == height / 2 && x <= 1) &&
                     !(y == height / 2 && x >= width - 2)) {
 
                 world[y][x] = building;
-                // Обязательно пишем в background! Иначе, если на здание упадет туман
-                // и потом развеется, здание пропадет и превратится в то, что было в фоне.
                 background[y][x] = building;
                 break;
             }
@@ -196,8 +192,8 @@ public class AreaMap implements Serializable {
             int y = rand.nextInt(height);
             int x = rand.nextInt(width);
             if (world[y][x] instanceof Field &&
-                    !(y == height / 2 && x == 1) && // Protect player position
-                    !(y == height / 2 && x == width - 2)) { // Protect bot position
+                    !(y == height / 2 && x == 1) &&
+                    !(y == height / 2 && x == width - 2)) {
                 world[y][x] = new Obstacle();
                 background[y][x] = new Obstacle();
                 placed++;
@@ -217,7 +213,6 @@ public class AreaMap implements Serializable {
         Props cell = world[newY][newX];
         Props realCell = (cell instanceof Smoke smoke) ? smoke.originalProp : cell;
 
-        // Проверяем, не находится ли на клетке препятствие (включая движущееся)
         if (realCell instanceof Obstacle || realCell instanceof DynamicObstacle) {
             System.out.println("Don't step on obstacles! ⚠️");
             return;
@@ -240,14 +235,14 @@ public class AreaMap implements Serializable {
                 handleBuilding(hero, newY, newX, building);
                 countedAsMove = true;
             }
-            case Cafe cafe -> {
-                if (handleCafe(hero, cafe)) countedAsMove = true;
+            case Cafe c -> {
+                if (handleCafe(hero, c)) countedAsMove = true;
             }
-            case Salon salon -> {
-                if (handleSalon(hero, salon)) countedAsMove = true;
+            case Salon s -> {
+                if (handleSalon(hero, s)) countedAsMove = true;
             }
-            case Hotel hotel -> {
-                if (handleHotel(hero, hotel)) countedAsMove = true;
+            case Hotel h -> {
+                if (handleHotel(hero, h)) countedAsMove = true;
             }
             case Hero other -> {
                 handleCombat(hero, other);
@@ -296,12 +291,11 @@ public class AreaMap implements Serializable {
 
             list.clear();
             AddQue addQue = new AddQue(list, names);
-            RemoveQue removeQue = new RemoveQue(list, this);
+            RemoveQue removeQue = new RemoveQue(list);
 
             addQue.start();
             removeQue.start();
 
-            // Блокируем основной поток игры, пока очередь не рассосется
             try {
                 addQue.join();
                 removeQue.join();
@@ -311,7 +305,7 @@ public class AreaMap implements Serializable {
 
             hero.isCafeUp = true;
             System.out.println("You had your coffee. Energy up!");
-            return true; // Возвращаем true, чтобы игра засчитала это как ход
+            return true;
         }
     }
 
@@ -329,7 +323,7 @@ public class AreaMap implements Serializable {
 
             list.clear();
             AddQue addQue = new AddQue(list, names);
-            RemoveQue removeQue = new RemoveQue(list, this);
+            RemoveQue removeQue = new RemoveQue(list);
 
             addQue.start();
             removeQue.start();
@@ -370,46 +364,37 @@ public class AreaMap implements Serializable {
             }
 
             System.out.println("Good morning! You feel refreshed.");
-            hero.moves = 0; // Сон в отеле сразу завершает ход героя
+            hero.moves = 0;
             return true;
         }
     }
 
     private void moveDynamicObstacles() {
         for (DynamicObstacle obstacle : dynamicObstacles) {
-            // Получаем следующую позицию
             DynamicObstacle.Point next = obstacle.getNextPosition();
 
-            // Проверяем, можно ли переместиться на эту клетку
             if (canObstacleMoveTo(next.y(), next.x())) {
-                // Освобождаем текущую клетку
                 world[obstacle.y][obstacle.x] = background[obstacle.y][obstacle.x];
-                // Перемещаем препятствие
                 obstacle.move();
-                // Занимаем новую клетку
                 world[obstacle.y][obstacle.x] = obstacle;
             }
         }
     }
 
     private boolean canObstacleMoveTo(int y, int x) {
-        // Проверяем, не находится ли на клетке герой или другое препятствие
         Props cell = world[y][x];
         if (cell instanceof Hero || cell instanceof Obstacle || cell instanceof DynamicObstacle) {
             return false;
         }
 
-        // Проверяем, не является ли клетка замком
         if (cell instanceof PlayerCastle || cell instanceof BotCastle) {
             return false;
         }
 
-        // Если клетка под дымом, проверяем исходный объект
         if (cell instanceof Smoke smoke) {
             cell = smoke.originalProp;
         }
 
-        // Препятствие может перемещаться только на Field или Trail
         return cell instanceof Field || cell instanceof Trail;
     }
 
@@ -655,7 +640,6 @@ public class AreaMap implements Serializable {
         if (username != null) {
             autoSave(new Hero[]{playerHero, computerHero}, "bot_win");
         }
-        // Добавляем обновление дисплея
         return world;
     }
 
@@ -671,13 +655,11 @@ public class AreaMap implements Serializable {
 
             if (nx < 0 || nx >= width || ny < 0 || ny >= height) continue;
 
-            // Проверяем, не находится ли на клетке препятствие
             Props cell = world[ny][nx];
             Props real = (cell instanceof Smoke smoke) ? smoke.originalProp : cell;
 
             if (real instanceof Obstacle || real instanceof DynamicObstacle) continue;
 
-            // Проверяем, не планирует ли препятствие переместиться на эту клетку
             boolean cellWillBeOccupied = false;
             for (DynamicObstacle obstacle : dynamicObstacles) {
                 DynamicObstacle.Point nextPos = obstacle.getNextPosition();
@@ -733,7 +715,7 @@ public class AreaMap implements Serializable {
                 }
             }
         }
-        placeCastles(); // Ensure castles are placed after loading
+        placeCastles();
     }
 
     public void saveToFile(String fileName) throws IOException {
@@ -753,7 +735,7 @@ public class AreaMap implements Serializable {
                         case Field _ -> 'F';
                         case Obstacle _ -> 'O';
                         case DynamicObstacle _ -> 'M';
-                        case PlayerCastle _, BotCastle _ -> 'F'; // Castles are handled by placeCastles
+                        case PlayerCastle _, BotCastle _ -> 'F';
                         default ->
                                 throw new IOException("Unknown Props type at " + i + "," + j + ": " + prop.getClass().getSimpleName());
                     };

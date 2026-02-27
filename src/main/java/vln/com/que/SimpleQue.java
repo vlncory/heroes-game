@@ -1,5 +1,6 @@
 package vln.com.que;
 
+
 public class SimpleQue extends Thread {
     @Override
     public synchronized void run() {

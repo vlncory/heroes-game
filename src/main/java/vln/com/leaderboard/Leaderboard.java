@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Leaderboard implements Serializable { // Добавлено для стабильной сериализации
+public class Leaderboard implements Serializable {
     private final List<Record> records;
 
     public record Record(String username, int score, String mapName) implements Serializable {
