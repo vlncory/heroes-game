@@ -7,6 +7,7 @@ import org.junit.jupiter.api.io.TempDir;
 import vln.com.buildings.PlayerCastle;
 import vln.com.graphic.Props;
 import vln.com.units.Hero;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -606,6 +607,29 @@ class AreaMapTest {
         } catch (Throwable t) {
             logger.log(Level.SEVERE, "testEndGame_PlayerLosesWhenBotCapturesCastles failed", t);
             throw t;
+        }
+    }
+
+    @Test
+    void testVotingEvent_PenalizeHero() {
+        logger.info("[AreaMapTest] testVotingEvent_PenalizeHero start");
+        try {
+            Hero targetHero = new Hero(50);
+
+            Method penalizeMethod = AreaMap.class.getDeclaredMethod("penalizeHero", Hero.class);
+            penalizeMethod.setAccessible(true);
+
+            penalizeMethod.invoke(map, targetHero);
+            assertEquals(35, targetHero.gold, "Hero should lose exactly 15 gold");
+
+            targetHero.gold = 5;
+            penalizeMethod.invoke(map, targetHero);
+            assertEquals(0, targetHero.gold, "Hero gold should not go below 0");
+
+            logger.info("[AreaMapTest] testVotingEvent_PenalizeHero passed");
+        } catch (Throwable t) {
+            logger.log(Level.SEVERE, "testVotingEvent_PenalizeHero failed", t);
+            throw new RuntimeException(t);
         }
     }
 }

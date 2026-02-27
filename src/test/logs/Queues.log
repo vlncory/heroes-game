@@ -1,0 +1,8 @@
+Feb 27, 2026 9:41:13 PM vln.com.que.QueuesTest testAddQue_fillsListAndAddsEndOfQueue
+INFO: [QueuesTest] testAddQue_fillsListAndAddsEndOfQueue start
+Feb 27, 2026 9:41:14 PM vln.com.que.QueuesTest testAddQue_fillsListAndAddsEndOfQueue
+INFO: [QueuesTest] testAddQue_fillsListAndAddsEndOfQueue passed
+Feb 27, 2026 9:41:14 PM vln.com.que.QueuesTest testRemoveQue_processesItemsAndStopsOnEnd
+INFO: [QueuesTest] testRemoveQue_processesItemsAndStopsOnEnd start
+Feb 27, 2026 9:41:17 PM vln.com.que.QueuesTest testRemoveQue_processesItemsAndStopsOnEnd
+INFO: [QueuesTest] testRemoveQue_processesItemsAndStopsOnEnd passed

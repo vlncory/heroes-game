@@ -94,3 +94,11 @@ Sep 13, 2025 10:30:49 AM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitialize
 INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero start
 Sep 13, 2025 10:30:49 AM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitializeToZero
 INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero passed
+Feb 27, 2026 9:41:31 PM vln.com.map.PortalTest portalDesign_ShouldBeCorrect
+INFO: [PortalTest] portalDesign_ShouldBeCorrect start
+Feb 27, 2026 9:41:31 PM vln.com.map.PortalTest portalDesign_ShouldBeCorrect
+INFO: [PortalTest] portalDesign_ShouldBeCorrect passed
+Feb 27, 2026 9:41:31 PM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitializeToZero
+INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero start
+Feb 27, 2026 9:41:31 PM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitializeToZero
+INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero passed

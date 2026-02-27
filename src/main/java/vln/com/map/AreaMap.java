@@ -23,6 +23,7 @@ public class AreaMap implements Serializable {
     private Portal activePortal = null;
     private final String username;
     private String currentMapName;
+    private boolean hasVotingEventOccurred = false;
     private final List<DynamicObstacle> dynamicObstacles = new ArrayList<>();
 
     public Cafe cafe = new Cafe();
@@ -30,7 +31,7 @@ public class AreaMap implements Serializable {
     public Hotel hotel = new Hotel();
 
     List<String> list = Collections.synchronizedList(new ArrayList<>());
-    List<String> names = new ArrayList<>();
+    private final List<String> npcPool = Arrays.asList("Alice", "Bob", "Charlie", "Dave", "Eve", "Frank", "Grace");
 
     public int getHeight() {
         return height;
@@ -45,14 +46,10 @@ public class AreaMap implements Serializable {
         height = h;
         width = w;
         this.username = username;
-        this.currentMapName = "Standard";
+        this.currentMapName = init ? "Standard" : null;
         world = new Props[h][w];
         background = new Props[h][w];
         smokeLayer = new boolean[h][w];
-
-        names.add("Alice");
-        names.add("Bob");
-        names.add("Charlie");
 
         if (init) {
             setupHeroes(heroes);
@@ -201,6 +198,19 @@ public class AreaMap implements Serializable {
         }
     }
 
+    private List<String> generateRandomQueue(int maxPeople) {
+        Random rand = new Random();
+        List<String> currentQueue = new ArrayList<>();
+
+        int queueSize = rand.nextInt(maxPeople + 1);
+
+        for (int i = 0; i < queueSize; i++) {
+            String randomName = npcPool.get(rand.nextInt(npcPool.size()));
+            currentQueue.add(randomName);
+        }
+        return currentQueue;
+    }
+
     public void moveHero(Hero hero, int dx, int dy) {
         int newX = hero.heroX + dx, newY = hero.heroY + dy;
         boolean countedAsMove = false;
@@ -266,6 +276,12 @@ public class AreaMap implements Serializable {
             if (globalTurnCounter % 2 == 0 && activePortal == null && Math.random() <= 0.3) {
                 spawnPortal();
             }
+
+            if (hero.isPlayer && !hasVotingEventOccurred && Math.random() <= 0.3) {
+                hasVotingEventOccurred = true;
+                triggerVotingEvent(hero);
+            }
+
             if (activePortal != null) {
                 activePortal.turnsSinceSpawn++;
                 if (activePortal.turnsSinceSpawn >= 10) {
@@ -287,10 +303,17 @@ public class AreaMap implements Serializable {
         } else {
             cafe.isVisited = true;
             hero.gold -= 10;
-            System.out.println("Wait, you have to stand in line...");
+
+            List<String> randomQueue = generateRandomQueue(5);
+
+            if (randomQueue.isEmpty()) {
+                System.out.println("Wow, no line today! Getting coffee instantly...");
+            } else {
+                System.out.println("Wait, you have to stand in line (" + randomQueue.size() + " people before you)...");
+            }
 
             list.clear();
-            AddQue addQue = new AddQue(list, names);
+            AddQue addQue = new AddQue(list, randomQueue);
             RemoveQue removeQue = new RemoveQue(list);
 
             addQue.start();
@@ -319,10 +342,17 @@ public class AreaMap implements Serializable {
         } else {
             salon.isVisited = true;
             hero.gold -= 12;
-            System.out.println("Wait, you have to stand in line...");
+
+            List<String> randomQueue = generateRandomQueue(3);
+
+            if (randomQueue.isEmpty()) {
+                System.out.println("No one here! Time for a haircut.");
+            } else {
+                System.out.println("Wait, there's a small queue (" + randomQueue.size() + " people before you)...");
+            }
 
             list.clear();
-            AddQue addQue = new AddQue(list, names);
+            AddQue addQue = new AddQue(list, randomQueue);
             RemoveQue removeQue = new RemoveQue(list);
 
             addQue.start();
@@ -351,22 +381,101 @@ public class AreaMap implements Serializable {
         } else {
             hotel.isVisited = true;
             hero.gold -= 15;
-            hero.isHotelUp = true;
-            System.out.println("It's time to get some sleep...");
 
-            SimpleQue simpleQue = new SimpleQue();
-            simpleQue.start();
+            List<String> randomQueue = generateRandomQueue(4);
+
+            if (randomQueue.isEmpty()) {
+                System.out.println("Checking in immediately...");
+            } else {
+                System.out.println("Waiting for the receptionist, queue: " + randomQueue.size() + " people.");
+            }
+
+            list.clear();
+            AddQue addQue = new AddQue(list, randomQueue);
+            RemoveQue removeQue = new RemoveQue(list);
+
+            addQue.start();
+            removeQue.start();
 
             try {
-                simpleQue.join();
+                addQue.join();
+                removeQue.join();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
 
+            hero.isHotelUp = true;
             System.out.println("Good morning! You feel refreshed.");
             hero.moves = 0;
             return true;
         }
+    }
+
+    private void playVotingSound() {
+        System.out.println("🔊 [Playing track: VOTING]");
+        try {
+            String basePath = System.getProperty("user.dir");
+            File soundFile = new File(basePath, "src/main/resources/VOTING.wav");
+
+            if (soundFile.exists()) {
+                javax.sound.sampled.AudioInputStream audioIn = javax.sound.sampled.AudioSystem.getAudioInputStream(soundFile);
+                javax.sound.sampled.Clip clip = javax.sound.sampled.AudioSystem.getClip();
+                clip.open(audioIn);
+                clip.start();
+            } else {
+                System.out.println("[Debug] Audio file not found at: " + soundFile.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            System.out.println("[Debug] Sound error: " + e.getMessage());
+        }
+    }
+
+    private void triggerVotingEvent(Hero hero) {
+        playVotingSound();
+        System.out.println("\n=========================================");
+        System.out.println("SUDDEN VOTING!");
+        System.out.println("Ad break: Do you like our project? (Yes/No)");
+        System.out.println("You have exactly 7 seconds to answer!");
+        System.out.println("=========================================");
+
+        long startTime = System.currentTimeMillis();
+        String answer = "";
+        boolean answered = false;
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+            while ((System.currentTimeMillis() - startTime) < 7000) {
+                if (reader.ready()) {
+                    answer = reader.readLine().trim().toLowerCase();
+                    answered = true;
+                    break;
+                }
+                Thread.sleep(100);
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading input.");
+        }
+
+        if (!answered) {
+            System.out.println("\n⏳ Time's up! You didn't vote in time.");
+            penalizeHero(hero);
+        } else {
+            if (answer.equals("yes") || answer.equals("y")) {
+                System.out.println("❤️ Thank you for your support! Let's continue the game.");
+            } else {
+                System.out.println("😠 That's too bad... Penalty for lack of loyalty to the project!");
+                penalizeHero(hero);
+            }
+        }
+
+        try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
+    }
+
+    private void penalizeHero(Hero hero) {
+        int penalty = 15;
+        hero.gold = Math.max(0, hero.gold - penalty);
+        System.out.println("Your army loses " + penalty + " gold. Remaining: " + hero.gold);
     }
 
     private void moveDynamicObstacles() {

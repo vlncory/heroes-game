@@ -1075,3 +1075,102 @@ Sep 13, 2025 10:30:53 AM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
 SEVERE: Access to private method via reflection detected
 Sep 13, 2025 10:30:53 AM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
 INFO: testMoveTowardsPlayer test completed successfully
+Feb 27, 2026 9:41:31 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+INFO: Starting testPlacementOfUnits
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+SEVERE: Accessed private field: battleGrid
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+INFO: testPlacementOfUnits assertions passed
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest testPlacementOfUnits
+INFO: testPlacementOfUnits completed
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+INFO: Starting testResetMovementFlags
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+SEVERE: Accessed private field: battleGrid
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+SEVERE: Accessed private method: resetMovementFlags
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+INFO: testResetMovementFlags assertions passed
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest testResetMovementFlags
+INFO: testResetMovementFlags completed
+Feb 27, 2026 9:41:32 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+INFO: Starting testFindTargetInRange
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+SEVERE: Accessed private field: battleGrid
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+SEVERE: Accessed private method: findTargetInRange
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+INFO: testFindTargetInRange assertions passed
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest testFindTargetInRange
+INFO: testFindTargetInRange completed
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+INFO: Starting testBattleEndsWithPlayerVictory
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+SEVERE: Accessed private field: battleGrid
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+SEVERE: Accessed private method: isBattleOver
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+INFO: testBattleEndsWithPlayerVictory assertions passed
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerVictory
+INFO: testBattleEndsWithPlayerVictory completed
+Feb 27, 2026 9:41:33 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+INFO: Starting testBattleEndsWithPlayerDefeat
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+SEVERE: Accessed private field: battleGrid
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+SEVERE: Accessed private method: setTestingMode
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+SEVERE: Accessed private method: isBattleOver
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+INFO: testBattleEndsWithPlayerDefeat assertions passed
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest testBattleEndsWithPlayerDefeat
+INFO: testBattleEndsWithPlayerDefeat completed
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+INFO: Starting testPerformAttackDestroysUnit
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+SEVERE: Accessed private field: battleGrid
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+SEVERE: Accessed private method: performAttack
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+INFO: testPerformAttackDestroysUnit assertions passed
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest testPerformAttackDestroysUnit
+INFO: testPerformAttackDestroysUnit completed
+Feb 27, 2026 9:41:34 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Initializing test setup
+Feb 27, 2026 9:41:35 PM vln.com.battle.FieldOfHonorTest setUp
+INFO: Test setup completed
+Feb 27, 2026 9:41:35 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+INFO: testMoveTowardsPlayer test started successfully
+Feb 27, 2026 9:41:35 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+WARNING: The system output has been replaced
+Feb 27, 2026 9:41:35 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+INFO: Intercepted output: This text is intercepted and is not visible in the console!
+Another intercepted text
+Feb 27, 2026 9:41:35 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+SEVERE: Access to private method via reflection detected
+Feb 27, 2026 9:41:35 PM vln.com.battle.FieldOfHonorTest testMoveTowardsPlayer
+INFO: testMoveTowardsPlayer test completed successfully
