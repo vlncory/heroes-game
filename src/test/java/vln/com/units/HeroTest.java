@@ -129,7 +129,7 @@ class HeroTest {
     void testUnitPurchase_buyLancer() {
         logger.info("[HeroTest] testUnitPurchase_buyLancer start");
         try {
-            Lancer sample = new Lancer(0);
+            Lancer sample = new Lancer(0, false, false);
             int cost = sample.cost;
             int qty = 3;
             hero = new Hero(cost * qty);
@@ -149,7 +149,7 @@ class HeroTest {
     void testUnitPurchase_buyArcher_partialGoldRemaining() {
         logger.info("[HeroTest] testUnitPurchase_buyArcher_partialGoldRemaining start");
         try {
-            Archer sample = new Archer(0);
+            Archer sample = new Archer(0, false, false);
             int cost = sample.cost;
             int qty = 2;
             hero = new Hero(cost * qty + cost / 2);
@@ -169,7 +169,7 @@ class HeroTest {
     void testUnitPurchase_buySwordsman_exactGold() {
         logger.info("[HeroTest] testUnitPurchase_buySwordsman_exactGold start");
         try {
-            Swordsman sample = new Swordsman(0);
+            Swordsman sample = new Swordsman(0, false, false);
             int cost = sample.cost;
             hero = new Hero(cost);
             hero.army.clear();
@@ -188,7 +188,7 @@ class HeroTest {
     void testUnitPurchase_buyCavalryman_zeroIfInsufficient() {
         logger.info("[HeroTest] testUnitPurchase_buyCavalryman_zeroIfInsufficient start");
         try {
-            Cavalryman sample = new Cavalryman(0);
+            Cavalryman sample = new Cavalryman(0, false, false);
             int cost = sample.cost;
             hero = new Hero(cost - 1);
             hero.army.clear();
@@ -207,7 +207,7 @@ class HeroTest {
     void testUnitPurchase_buyPaladin_multiple() {
         logger.info("[HeroTest] testUnitPurchase_buyPaladin_multiple start");
         try {
-            Paladin sample = new Paladin(0);
+            Paladin sample = new Paladin(0, false, false);
             int cost = sample.cost;
             int qty = 5;
             hero = new Hero(cost * qty * 2);

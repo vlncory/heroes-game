@@ -5,12 +5,10 @@ import vln.com.buildings.*;
 import vln.com.graphic.Props;
 import vln.com.leaderboard.Leaderboard;
 import vln.com.units.*;
+import vln.com.que.*;
 
 import java.io.*;
-import java.util.Random;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class AreaMap implements Serializable {
 
@@ -26,6 +24,13 @@ public class AreaMap implements Serializable {
     private final String username;
     private String currentMapName;
     private final List<DynamicObstacle> dynamicObstacles = new ArrayList<>();
+
+    public Cafe cafe = new Cafe();
+    public Salon salon = new Salon();
+    public Hotel hotel = new Hotel();
+
+    List<String> list = Collections.synchronizedList(new ArrayList<>());
+    List<String> names = new ArrayList<>();
 
     public int getHeight() {
         return height;
@@ -45,12 +50,17 @@ public class AreaMap implements Serializable {
         background = new Props[h][w];
         smokeLayer = new boolean[h][w];
 
+        names.add("Alice");
+        names.add("Bob");
+        names.add("Charlie");
+
         if (init) {
             setupHeroes(heroes);
             buildMap();
             world[heroes[0].heroY][heroes[0].heroX] = heroes[0];
             world[heroes[1].heroY][heroes[1].heroX] = heroes[1];
             addObstacles();
+            addSpecialBuildings();
         }
     }
 
@@ -86,6 +96,33 @@ public class AreaMap implements Serializable {
 
     public AreaMap(String mapFile, Hero[] heroes) throws IOException {
         this(mapFile, heroes, null);
+    }
+
+    private void addSpecialBuildings() {
+        Random rand = new Random();
+        // Расставляем наши уникальные здания
+        placeUniqueBuilding(this.cafe, rand);
+        placeUniqueBuilding(this.salon, rand);
+        placeUniqueBuilding(this.hotel, rand);
+    }
+
+    private void placeUniqueBuilding(Props building, Random rand) {
+        while (true) {
+            int y = rand.nextInt(height);
+            int x = rand.nextInt(width);
+
+            // Проверяем, что это обычное поле и оно не находится на линии спавна героев/замков
+            if (world[y][x] instanceof Field &&
+                    !(y == height / 2 && x <= 1) &&
+                    !(y == height / 2 && x >= width - 2)) {
+
+                world[y][x] = building;
+                // Обязательно пишем в background! Иначе, если на здание упадет туман
+                // и потом развеется, здание пропадет и превратится в то, что было в фоне.
+                background[y][x] = building;
+                break;
+            }
+        }
     }
 
     private void setupHeroes(Hero[] h) {
@@ -203,6 +240,15 @@ public class AreaMap implements Serializable {
                 handleBuilding(hero, newY, newX, building);
                 countedAsMove = true;
             }
+            case Cafe cafe -> {
+                if (handleCafe(hero, cafe)) countedAsMove = true;
+            }
+            case Salon salon -> {
+                if (handleSalon(hero, salon)) countedAsMove = true;
+            }
+            case Hotel hotel -> {
+                if (handleHotel(hero, hotel)) countedAsMove = true;
+            }
             case Hero other -> {
                 handleCombat(hero, other);
                 countedAsMove = true;
@@ -233,6 +279,99 @@ public class AreaMap implements Serializable {
             }
             moveDynamicObstacles();
             updateDisplay();
+        }
+    }
+
+    private boolean handleCafe(Hero hero, Cafe cafe) {
+        if (cafe.isVisited) {
+            System.out.println("You've already had enough coffee!");
+            return false;
+        } else if (hero.gold < 10) {
+            System.out.println("Get out of here until you find 10 gold coins!");
+            return false;
+        } else {
+            cafe.isVisited = true;
+            hero.gold -= 10;
+            System.out.println("Wait, you have to stand in line...");
+
+            list.clear();
+            AddQue addQue = new AddQue(list, names);
+            RemoveQue removeQue = new RemoveQue(list, this);
+
+            addQue.start();
+            removeQue.start();
+
+            // Блокируем основной поток игры, пока очередь не рассосется
+            try {
+                addQue.join();
+                removeQue.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            hero.isCafeUp = true;
+            System.out.println("You had your coffee. Energy up!");
+            return true; // Возвращаем true, чтобы игра засчитала это как ход
+        }
+    }
+
+    private boolean handleSalon(Hero hero, Salon salon) {
+        if (salon.isVisited) {
+            System.out.println("You already have a nice haircut!");
+            return false;
+        } else if (hero.gold < 12) {
+            System.out.println("Get out of here until you find 12 gold coins!");
+            return false;
+        } else {
+            salon.isVisited = true;
+            hero.gold -= 12;
+            System.out.println("Wait, you have to stand in line...");
+
+            list.clear();
+            AddQue addQue = new AddQue(list, names);
+            RemoveQue removeQue = new RemoveQue(list, this);
+
+            addQue.start();
+            removeQue.start();
+
+            try {
+                addQue.join();
+                removeQue.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            hero.isSalonUp = true;
+            System.out.println("Looking sharp!");
+            return true;
+        }
+    }
+
+    private boolean handleHotel(Hero hero, Hotel hotel) {
+        if (hotel.isVisited) {
+            System.out.println("Are you here to play or sleep?");
+            return false;
+        } else if (hero.gold < 15) {
+            System.out.println("Go sleep on the street until you find 15 coins!");
+            return false;
+        } else {
+            hotel.isVisited = true;
+            hero.gold -= 15;
+            hero.isHotelUp = true;
+            System.out.println("It's time to get some sleep...");
+
+            SimpleQue simpleQue = new SimpleQue();
+            simpleQue.start();
+
+            try {
+                simpleQue.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            System.out.println("Good morning! You feel refreshed.");
+            hero.moves = 0; // Сон в отеле сразу завершает ход героя
+            return true;
         }
     }
 
@@ -446,8 +585,8 @@ public class AreaMap implements Serializable {
         }
 
         if (endGame()) {
-            if (world[height/2][0] instanceof PlayerCastle &&
-                    world[height/2][width-1] instanceof PlayerCastle) {
+            if (world[height / 2][0] instanceof PlayerCastle &&
+                    world[height / 2][width - 1] instanceof PlayerCastle) {
                 if (username != null) {
                     int score = calculateScore();
                     String mapName = currentMapName;
@@ -615,7 +754,8 @@ public class AreaMap implements Serializable {
                         case Obstacle _ -> 'O';
                         case DynamicObstacle _ -> 'M';
                         case PlayerCastle _, BotCastle _ -> 'F'; // Castles are handled by placeCastles
-                        default -> throw new IOException("Unknown Props type at " + i + "," + j + ": " + prop.getClass().getSimpleName());
+                        default ->
+                                throw new IOException("Unknown Props type at " + i + "," + j + ": " + prop.getClass().getSimpleName());
                     };
                     writer.write(type);
                 }
@@ -823,13 +963,13 @@ public class AreaMap implements Serializable {
     }
 
     public boolean endGame() {
-        if (world[height/2][0] instanceof PlayerCastle &&
-                world[height/2][width-1] instanceof PlayerCastle) {
+        if (world[height / 2][0] instanceof PlayerCastle &&
+                world[height / 2][width - 1] instanceof PlayerCastle) {
             System.out.println("You won!");
             return true;
         }
-        if (world[height/2][0] instanceof BotCastle &&
-                world[height/2][width-1] instanceof BotCastle) {
+        if (world[height / 2][0] instanceof BotCastle &&
+                world[height / 2][width - 1] instanceof BotCastle) {
             System.out.println("You lost!");
             return true;
         }

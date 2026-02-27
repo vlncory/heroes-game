@@ -55,7 +55,7 @@ public class FieldOfHonor {
             int count = entry.getValue();
 
             if (count > 0) {
-                Unit unit = createUnit(unitType, count);
+                Unit unit = createUnit(unitType, count, hero);
                 unit.unitX = startColumn;
                 unit.unitY = row;
                 unit.isPlayerUnit = hero.isPlayer;
@@ -250,13 +250,13 @@ public class FieldOfHonor {
         }
     }
 
-    private Unit createUnit(String unitType, int count) {
+    private Unit createUnit(String unitType, int count, Hero hero) {
         return switch (unitType) {
-            case "Lancer" -> new Lancer(count);
-            case "Archer" -> new Archer(count);
-            case "Swordsman" -> new Swordsman(count);
-            case "Cavalryman" -> new Cavalryman(count);
-            case "Paladin" -> new Paladin(count);
+            case "Lancer" -> new Lancer(count, hero.isSalonUp, hero.isHotelUp);
+            case "Archer" -> new Archer(count, hero.isSalonUp, hero.isHotelUp);
+            case "Swordsman" -> new Swordsman(count, hero.isSalonUp, hero.isHotelUp);
+            case "Cavalryman" -> new Cavalryman(count, hero.isSalonUp, hero.isHotelUp);
+            case "Paladin" -> new Paladin(count, hero.isSalonUp, hero.isHotelUp);
             default -> throw new IllegalArgumentException("Unknown unit type: " + unitType);
         };
     }

@@ -28,15 +28,15 @@ class UnitTypeInitializationTest {
     static Stream<Arguments> unitProvider() {
         int count = 3;
         return Stream.of(
-                Arguments.of((Supplier<Unit>) () -> new Swordsman(count),
+                Arguments.of((Supplier<Unit>) () -> new Swordsman(count, false, false),
                         count, 10, 15, 7, 1, 3, "S"),
-                Arguments.of((Supplier<Unit>) () -> new Archer(count),
+                Arguments.of((Supplier<Unit>) () -> new Archer(count, false, false),
                         count, 8, 5, 5, 100, 1, "A"),
-                Arguments.of((Supplier<Unit>) () -> new Lancer(count),
+                Arguments.of((Supplier<Unit>) () -> new Lancer(count, false, false),
                         count, 5, 7, 3, 1, 2, "L"),
-                Arguments.of((Supplier<Unit>) () -> new Cavalryman(count),
+                Arguments.of((Supplier<Unit>) () -> new Cavalryman(count, false, false),
                         count, 15, 12, 9, 2, 4, "C"),
-                Arguments.of((Supplier<Unit>) () -> new Paladin(count),
+                Arguments.of((Supplier<Unit>) () -> new Paladin(count, false, false),
                         count, 25, 18, 10, 2, 5, "P")
         );
     }

@@ -13,6 +13,11 @@ public class Hero extends Props implements Serializable {
     public int heroY;
     public HashMap<String, Integer> army;
     public boolean isStable = false;
+
+    public boolean isCafeUp = false;
+    public boolean isSalonUp = false;
+    public boolean isHotelUp = false;
+
     public boolean isPlayer = false;
     public boolean isAvailable = false;
     public int moves = 10;
@@ -34,6 +39,10 @@ public class Hero extends Props implements Serializable {
             System.out.println("Restored 10 moves");
             this.moves = 10;
         }
+        if (isCafeUp) {
+            System.out.println("Plus 3 moves");
+            this.moves += 3;
+        }
     }
 
     public void unitPurchase(Building castle, String choice, int gold) {
@@ -49,7 +58,7 @@ public class Hero extends Props implements Serializable {
 
     void BuyLancer(int gold, Building castle) {
         if (castle.isBuildingPurchased("G") && castle.isBuildingPurchased("T")) {
-            Lancer guy = new Lancer(0);
+            Lancer guy = new Lancer(0, this.isSalonUp, this.isHotelUp);
             processPurchase(guy, gold, "Lancer");
         } else {
             System.out.println("Need both Guard post and Tavern to recruit Lancers!");
@@ -58,7 +67,7 @@ public class Hero extends Props implements Serializable {
 
     void BuyArcher(int gold, Building castle) {
         if (castle.isBuildingPurchased("A") && castle.isBuildingPurchased("T")) {
-            Archer guy = new Archer(0);
+            Archer guy = new Archer(0, this.isSalonUp, this.isHotelUp);
             processPurchase(guy, gold, "Archer");
         } else {
             System.out.println("Need both Archer Tower and Tavern to recruit Archers!");
@@ -67,7 +76,7 @@ public class Hero extends Props implements Serializable {
 
     void BuySwordsman(int gold, Building castle) {
         if (castle.isBuildingPurchased("W") && castle.isBuildingPurchased("T")) {
-            Swordsman guy = new Swordsman(0);
+            Swordsman guy = new Swordsman(0, this.isSalonUp, this.isHotelUp);
             processPurchase(guy, gold, "Swordsman");
         } else {
             System.out.println("Need both Weapon Shop and Tavern to recruit Swordsmen!");
@@ -76,7 +85,7 @@ public class Hero extends Props implements Serializable {
 
     void BuyCavalryman(int gold, Building castle) {
         if (castle.isBuildingPurchased("AA") && castle.isBuildingPurchased("T")) {
-            Cavalryman guy = new Cavalryman(0);
+            Cavalryman guy = new Cavalryman(0, this.isSalonUp, this.isHotelUp);
             processPurchase(guy, gold, "Cavalryman");
         } else {
             System.out.println("Need both Arena and Tavern to recruit Cavalrymen!");
@@ -85,7 +94,7 @@ public class Hero extends Props implements Serializable {
 
     void BuyPaladin(int gold, Building castle) {
         if (castle.isBuildingPurchased("C") && castle.isBuildingPurchased("T")) {
-            Paladin guy = new Paladin(0);
+            Paladin guy = new Paladin(0, this.isSalonUp, this.isHotelUp);
             processPurchase(guy, gold, "Paladin");
         } else {
             System.out.println("Need both Cathedral and Tavern to recruit Paladins!");
