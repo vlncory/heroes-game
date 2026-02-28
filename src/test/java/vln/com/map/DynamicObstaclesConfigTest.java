@@ -32,15 +32,12 @@ public class DynamicObstaclesConfigTest {
 
     @Test
     void testSaveToXML() throws Exception {
-        // Arrange
         File mapsDir = new File(tempDir.toFile(), "src/main/resources/maps");
         assertTrue(mapsDir.mkdirs(), "Maps directory should be created");
         System.setProperty("user.dir", tempDir.toString());
 
-        // Act
         DynamicObstaclesConfig.saveToXML(mapName, testObstacles);
 
-        // Assert
         File outputFile = new File(mapsDir, mapName + "_dynamic.xml");
         assertTrue(outputFile.exists(), "XML file should be created");
 
@@ -53,16 +50,13 @@ public class DynamicObstaclesConfigTest {
 
     @Test
     void testLoadFromXML() throws Exception {
-        // Arrange
         File mapsDir = new File(tempDir.toFile(), "src/main/resources/maps");
         assertTrue(mapsDir.mkdirs(), "Maps directory should be created");
         System.setProperty("user.dir", tempDir.toString());
         DynamicObstaclesConfig.saveToXML(mapName, testObstacles);
 
-        // Act
         List<DynamicObstaclesConfig.ObstacleData> loadedObstacles = DynamicObstaclesConfig.loadFromXML(mapName);
 
-        // Assert
         assertEquals(1, loadedObstacles.size(), "Should load one obstacle");
         DynamicObstaclesConfig.ObstacleData loaded = loadedObstacles.getFirst();
         assertEquals(0, loaded.startX(), "Start X should match");
@@ -76,13 +70,10 @@ public class DynamicObstaclesConfigTest {
 
     @Test
     void testLoadFromNonExistentXML() throws Exception {
-        // Arrange
         System.setProperty("user.dir", tempDir.toString());
 
-        // Act
         List<DynamicObstaclesConfig.ObstacleData> loadedObstacles = DynamicObstaclesConfig.loadFromXML("nonexistent");
 
-        // Assert
         assertTrue(loadedObstacles.isEmpty(), "Should return empty list for non-existent file");
     }
 }

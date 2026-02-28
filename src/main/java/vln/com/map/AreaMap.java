@@ -448,8 +448,13 @@ public class AreaMap implements Serializable {
             while ((System.currentTimeMillis() - startTime) < 7000) {
                 if (reader.ready()) {
                     answer = reader.readLine().trim().toLowerCase();
-                    answered = true;
-                    break;
+
+                    if (answer.equals("yes") || answer.equals("y") || answer.equals("no") || answer.equals("n")) {
+                        answered = true;
+                        break;
+                    } else {
+                        System.out.print("Invalid input! Please enter 'Yes' or 'No' quickly: ");
+                    }
                 }
                 Thread.sleep(100);
             }
@@ -462,14 +467,17 @@ public class AreaMap implements Serializable {
             penalizeHero(hero);
         } else {
             if (answer.equals("yes") || answer.equals("y")) {
-                System.out.println("❤️ Thank you for your support! Let's continue the game.");
+                System.out.println("Thank you for your support! Let's continue the game. ❤");
             } else {
-                System.out.println("😠 That's too bad... Penalty for lack of loyalty to the project!");
+                System.out.println("That's too bad... Penalty for lack of loyalty to the project!");
                 penalizeHero(hero);
             }
         }
 
-        try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ignored) {
+        }
     }
 
     private void penalizeHero(Hero hero) {
@@ -747,7 +755,7 @@ public class AreaMap implements Serializable {
         isBattleStarted = false;
         playerHero.resetMoves();
         if (username != null) {
-            autoSave(new Hero[]{playerHero, computerHero}, "bot_win");
+            autoSave(new Hero[]{playerHero, computerHero});
         }
         return world;
     }
@@ -959,7 +967,7 @@ public class AreaMap implements Serializable {
                             System.out.print("Enter map name: ");
                             String name = scanner.nextLine().trim();
                             saveToFile(name);
-                            currentMapName = name; // Update currentMapName
+                            currentMapName = name;
                             System.out.println("Map saved as " + name + ".map");
                         }
                     } catch (IOException e) {
@@ -1033,10 +1041,10 @@ public class AreaMap implements Serializable {
         }
     }
 
-    private void autoSave(Hero[] heroes, String event) {
+    private void autoSave(Hero[] heroes) {
         try {
-            saveGame("auto_save_" + event + "_" + System.currentTimeMillis(), heroes);
-            System.out.println("Auto-saved after " + event);
+            saveGame("auto_save_bot_win_" + System.currentTimeMillis(), heroes);
+            System.out.println("Auto-saved after defeating a bot");
         } catch (IOException e) {
             System.out.println("Auto-save failed: " + e.getMessage());
         }
@@ -1047,9 +1055,6 @@ public class AreaMap implements Serializable {
             if (hero.isAvailable && !isBattleStarted) {
                 hero.resetMoves();
             }
-        }
-        if (username != null) {
-            autoSave(heroes, "end_round");
         }
     }
 

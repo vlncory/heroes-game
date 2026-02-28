@@ -16,7 +16,21 @@ public class Leaderboard implements Serializable {
     }
 
     public void addRecord(String username, int score, String mapName) {
-        records.removeIf(record -> record.username().equals(username));
+        Record existingRecord = null;
+        for (Record record : records) {
+            if (record.username().equals(username) && record.mapName().equals(mapName)) {
+                existingRecord = record;
+                break;
+            }
+        }
+
+        if (existingRecord != null) {
+            if (existingRecord.score() >= score) {
+                return;
+            }
+            records.remove(existingRecord);
+        }
+
         records.add(new Record(username, score, mapName));
         records.sort(Comparator.comparingInt(Record::score).reversed());
     }

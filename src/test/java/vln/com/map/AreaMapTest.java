@@ -80,33 +80,28 @@ class AreaMapTest {
         scanner = new Scanner(new StringReader(input.toString()));
     }
 
-    // Test 1: Корректность редактирования карты – проверка на координаты и т.д.
     @Test
     void testMapEditingValidCoordinates() {
         logger.info("[AreaMapTest] testMapEditingValidCoordinates start");
         try {
-            // Initialize map without heroes to avoid interference
             map = new AreaMap(10, 10, null, false, "testUser");
             setInput(
-                    "d", // Move right from (5,5) to (5,6)
-                    "t", // Place Trail
-                    "s", // Move down to (6,6)
-                    "o", // Place Obstacle
-                    "a", // Move left to (6,5)
-                    "f", // Place Field
-                    "q"  // Quit
+                    "d",
+                    "t",
+                    "s",
+                    "o",
+                    "a",
+                    "f",
+                    "q"
             );
 
-            // Log initial cursor position
             int cursorY = height / 2;
             int cursorX = width / 2;
             logger.info("Initial cursor position: (" + cursorY + "," + cursorX + ")");
 
-            // Simulate editMode with logging
             map.editMode(scanner);
 
             Props[][] world = getWorld();
-            // Debug actual types
             logger.info("Type at (5,6): " + (world[5][6] != null ? world[5][6].getClass().getSimpleName() : "null"));
             logger.info("Type at (6,6): " + (world[6][6] != null ? world[6][6].getClass().getSimpleName() : "null"));
             logger.info("Type at (6,5): " + (world[6][5] != null ? world[6][5].getClass().getSimpleName() : "null"));
@@ -124,9 +119,9 @@ class AreaMapTest {
     @Test
     void testMapEditingInvalidCastlePosition() {
         setInput(
-                "a", // Move to (5,0) - castle position
-                "t", // Try to place Trail
-                "q"  // Quit
+                "a",
+                "t",
+                "q"
         );
         map.editMode(scanner);
 
@@ -140,11 +135,11 @@ class AreaMapTest {
         try {
             map = new AreaMap(10, 10, null, false, "testUser");
             setInput(
-                    "w", // Move up from (5,5) to (4,5)
-                    "t", // Place Trail
-                    "a", // Move left to (4,4)
-                    "o", // Place Obstacle
-                    "q"  // Quit
+                    "w",
+                    "t",
+                    "a",
+                    "o",
+                    "q"
             );
             map.editMode(scanner);
 
@@ -160,7 +155,6 @@ class AreaMapTest {
         }
     }
 
-    // Test 2: Корректность сохранения карты
     @Test
     void testMapSaving() throws IOException {
         logger.info("[AreaMapTest] testMapSaving start");
@@ -171,11 +165,11 @@ class AreaMapTest {
 
             map = new AreaMap(10, 10, null, false, "testUser");
             setInput(
-                    "d", // Move to (5,6)
-                    "t", // Place Trail
-                    "e", // Save
-                    "testMap", // Map name
-                    "q"  // Quit
+                    "d",
+                    "t",
+                    "e",
+                    "testMap",
+                    "q"
             );
             map.editMode(scanner);
 
@@ -193,7 +187,6 @@ class AreaMapTest {
         }
     }
 
-    // Test 3: Корректность изменения существующей карты
     @Test
     void testMapEditingExistingMap() throws IOException {
         logger.info("[AreaMapTest] testMapEditingExistingMap start");
@@ -220,12 +213,12 @@ class AreaMapTest {
             AreaMap loadedMap = new AreaMap("testMap", null, "testUser");
 
             setInput(
-                    "a", // Move to (5,4)
-                    "a", // Move to (5,3)
-                    "a", // Move to (5,2)
-                    "o", // Place Obstacle
-                    "e", // Save
-                    "q"  // Quit
+                    "a",
+                    "a",
+                    "a",
+                    "o",
+                    "e",
+                    "q"
             );
             loadedMap.editMode(scanner);
 
@@ -248,7 +241,6 @@ class AreaMapTest {
         }
     }
 
-    // Test 4: Корректность загрузки карты
     @Test
     void testMapLoading() throws IOException {
         Path mapFile = tempDir.resolve("src/main/resources/maps/testMap.map");
@@ -278,7 +270,6 @@ class AreaMapTest {
         assertInstanceOf(BotCastle.class, world[5][9], "BotCastle should be loaded at (5,9)");
     }
 
-    // Test 5: Корректность загрузки сохранения пользователя
     @Test
     void testLoadUserSave() throws IOException, ClassNotFoundException {
         // Modify hero state
@@ -287,24 +278,20 @@ class AreaMapTest {
         heroes[1].gold = 30;
         heroes[1].army.put("Archer", 5);
 
-        // Save game
         Path saveDir = tempDir.resolve("src/main/saves/testUser");
         Files.createDirectories(saveDir);
         System.setProperty("user.dir", tempDir.toString());
         map.saveGame("testSave", heroes);
 
-        // Load game
         Hero[] newHeroes = new Hero[]{new Hero(100), new Hero(100)};
         AreaMap loadedMap = AreaMap.loadGame("testSave", "testUser", newHeroes);
 
-        // Verify map
         Props[][] loadedWorld = getWorld(loadedMap);
         assertInstanceOf(PlayerCastle.class, loadedWorld[5][0], "PlayerCastle should be at (5,0)");
         assertInstanceOf(BotCastle.class, loadedWorld[5][9], "BotCastle should be at (5,9)");
         assertInstanceOf(Hero.class, loadedWorld[5][1], "Player hero should be at (5,1)");
         assertInstanceOf(Hero.class, loadedWorld[5][8], "Bot hero should be at (5,8)");
 
-        // Verify hero state
         assertEquals(50, newHeroes[0].gold, "Player hero gold should be restored");
         assertEquals(15, newHeroes[0].army.get("Lancer"), "Player hero Lancer count should be restored");
         assertEquals(30, newHeroes[1].gold, "Bot hero gold should be restored");
@@ -326,35 +313,38 @@ class AreaMapTest {
     }
 
     @Test
-    void testAutoSaveOnEndRound() throws IOException, ClassNotFoundException {
-        logger.info("[AreaMapTest] testAutoSaveOnEndRound start");
+    void testAutoSaveOnBotWin() throws IOException, ClassNotFoundException {
+        logger.info("[AreaMapTest] testAutoSaveOnBotWin start");
         try {
             File saveDir = new File(tempDir.toFile(), "src/main/saves/testUser");
-            assertTrue(saveDir.mkdirs(), "Save directory should be created");
+            assertTrue(saveDir.mkdirs() || saveDir.exists(), "Save directory should be created");
             System.setProperty("user.dir", tempDir.toString());
 
-            map.endRound(heroes);
+            heroes[0].gold = 100;
+            heroes[1].gold = 50;
 
-            File[] saveFiles = saveDir.listFiles((_, name) -> name.startsWith("auto_save_end_round_") && name.endsWith(".sav"));
+            map.endBotBattle(heroes[0], heroes[1]);
+
+            File[] saveFiles = saveDir.listFiles((_, name) -> name.startsWith("auto_save_bot_win_") && name.endsWith(".sav"));
             assertNotNull(saveFiles, "Autosave directory should exist");
-            assertEquals(1, saveFiles.length, "One autosave file should be created");
+            assertEquals(1, saveFiles.length, "Exactly one bot_win autosave file should be created");
 
-            Hero[] loadedHeroes = new Hero[]{new Hero(100), new Hero(100)};
+            Hero[] loadedHeroes = new Hero[]{new Hero(0), new Hero(0)};
             AreaMap loadedMap = AreaMap.loadGame(saveFiles[0].getName().replace(".sav", ""), "testUser", loadedHeroes);
 
-            Props[][] loadedWorld = getWorld(loadedMap);
-            assertInstanceOf(Hero.class, loadedWorld[5][1], "Player hero should be at (5,1) in autosave");
-            assertInstanceOf(Hero.class, loadedWorld[5][8], "Bot hero should be at (5,8) in autosave");
-            assertEquals(10, loadedHeroes[0].army.get("Lancer"), "Player hero army should be restored");
-            assertEquals(6, loadedHeroes[1].army.get("Lancer"), "Bot hero army should be restored");
-            logger.info("[AreaMapTest] testAutoSaveOnEndRound passed");
+            assertNotNull(loadedMap, "Loaded map should not be null after loading from save");
+
+            assertEquals(150, loadedHeroes[0].gold, "Player should have received the bot's gold (100 + 50)");
+            assertEquals(0, loadedHeroes[1].gold, "Bot's gold should be reduced to 0");
+            assertFalse(loadedHeroes[1].isAvailable, "Bot should be marked as unavailable after defeat");
+
+            logger.info("[AreaMapTest] testAutoSaveOnBotWin passed");
         } catch (Throwable t) {
-            logger.log(Level.SEVERE, "testAutoSaveOnEndRound failed", t);
+            logger.log(Level.SEVERE, "testAutoSaveOnBotWin failed", t);
             throw t;
         }
     }
 
-    // Helper to access private world field (assumes getWorld() is not available)
     private Props[][] getWorld() {
         return getWorld(map);
     }

@@ -102,3 +102,27 @@ Feb 27, 2026 9:41:31 PM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitializeT
 INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero start
 Feb 27, 2026 9:41:31 PM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitializeToZero
 INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero passed
+Feb 28, 2026 1:52:17 AM vln.com.map.PortalTest portalDesign_ShouldBeCorrect
+INFO: [PortalTest] portalDesign_ShouldBeCorrect start
+Feb 28, 2026 1:52:17 AM vln.com.map.PortalTest portalDesign_ShouldBeCorrect
+INFO: [PortalTest] portalDesign_ShouldBeCorrect passed
+Feb 28, 2026 1:52:17 AM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitializeToZero
+INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero start
+Feb 28, 2026 1:52:17 AM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitializeToZero
+INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero passed
+Feb 28, 2026 2:04:42 AM vln.com.map.PortalTest portalDesign_ShouldBeCorrect
+INFO: [PortalTest] portalDesign_ShouldBeCorrect start
+Feb 28, 2026 2:04:42 AM vln.com.map.PortalTest portalDesign_ShouldBeCorrect
+INFO: [PortalTest] portalDesign_ShouldBeCorrect passed
+Feb 28, 2026 2:04:42 AM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitializeToZero
+INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero start
+Feb 28, 2026 2:04:42 AM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitializeToZero
+INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero passed
+Feb 28, 2026 2:11:01 AM vln.com.map.PortalTest portalDesign_ShouldBeCorrect
+INFO: [PortalTest] portalDesign_ShouldBeCorrect start
+Feb 28, 2026 2:11:01 AM vln.com.map.PortalTest portalDesign_ShouldBeCorrect
+INFO: [PortalTest] portalDesign_ShouldBeCorrect passed
+Feb 28, 2026 2:11:01 AM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitializeToZero
+INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero start
+Feb 28, 2026 2:11:01 AM vln.com.map.PortalTest turnsSinceSpawn_ShouldInitializeToZero
+INFO: [PortalTest] turnsSinceSpawn_ShouldInitializeToZero passed

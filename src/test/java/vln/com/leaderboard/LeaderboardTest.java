@@ -37,13 +37,24 @@ class LeaderboardTest {
     @Test
     void testAddRecordUpdateExistingUser() {
         leaderboard.addRecord("user1", 100, "testMap");
-        leaderboard.addRecord("user1", 200, "newMap");
+
+        leaderboard.addRecord("user1", 50, "testMap");
+
+        leaderboard.addRecord("user1", 200, "testMap");
+
+        leaderboard.addRecord("user1", 300, "newMap");
 
         List<Leaderboard.Record> records = leaderboard.getTopRecords(5);
-        assertEquals(1, records.size(), "Should have one record after update");
+
+        assertEquals(2, records.size(), "Should have two records for different maps");
+
         assertEquals("user1", records.getFirst().username(), "Username should match");
-        assertEquals(200, records.getFirst().score(), "Score should be updated to 200");
-        assertEquals("newMap", records.getFirst().mapName(), "Map name should be updated");
+        assertEquals(300, records.get(0).score(), "Best score should be 300");
+        assertEquals("newMap", records.get(0).mapName(), "Map should be newMap");
+
+        assertEquals("user1", records.get(1).username(), "Username should match");
+        assertEquals(200, records.get(1).score(), "Score should be updated to 200");
+        assertEquals("testMap", records.get(1).mapName(), "Map should be testMap");
     }
 
     @Test
